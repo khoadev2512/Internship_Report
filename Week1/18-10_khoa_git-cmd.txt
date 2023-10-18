@@ -1,0 +1,85 @@
+GIT COMMAND
+
+1. Login
+
+	step1: Generate a ssh key:		ssh-keygen -t rsa -b 4096 -C "khoa.nguyencse.npng@hcmut.edu.vn"
+
+	step2: Add SSH Key to SSH Agent:	eval "$(ssh-agent -s)" 
+						
+						ssh-add ~/.ssh/id_rsa
+
+	step3: Copy Public Key to Github:	Go to github "setting" > "SSH and GPG keys" and add your ssh key. Get key by: cat ~/.ssh/id_rsa.pub
+								
+	step4: Set config:			Tell git who you are by running cmd:
+	
+							git config --global user.email "you@example.com"
+  							
+  							git config --global user.name "Your Name"
+
+
+2. Repository Management
+
+	a. git init: 	create a new Git repository
+
+	      usage:	- step1: go to directory you want to create  Git repository
+	      		- step2: run "git init" (this will create a .git file to track changes and maintain version of the project
+		
+	b. git clone:
+		- Clone with HTTPS: by this way, you must enter username and password to authenticate
+							
+			Ex: git clone https://github.com/khoadev2512/Synthesis-project-SE.git	
+						
+		- Clone with SSH: to make it easier, add "GitHub's SSH key fingerprints" to your "~/.ssh/known_hosts" file
+							
+			Ex: git clone git@github.com:khoadev2512/Synthesis-project-SE.git 
+			
+	c. git remote: Manage set of tracked repositories 
+		
+		git remote    				# List the remote connections you have to other repositories.
+		
+		git remote -v				# List with URL 
+		
+		git remote add origin <URL>		# Add a new remote repository with a URL
+		
+		git remote rename old-name new-name	# Rename an existing remote repository
+
+		git remote set-url remote-name new-URL  # Change the URL of an existing remote repository
+		
+		git remote remove remote-name		# Remove an existing remote repository
+
+			   
+			   
+	d. git fetch:
+		git fetch 		# fetches new branches, tags, and changes from the remote repository without making any changes to your working directory
+		git fetch --all		# fetch changes from all remote repositories configured in your local repository
+
+	e. git push: 
+		git push <remote> <branch>
+	f. git pull:
+
+3. Working with Commits
+	a. git commit:
+	b. git status:
+	c. git diff:
+	d. git log:
+	e. git blame:
+	f. git bisect:
+
+4. Branch and Merging
+	a. git branch
+	b. git checkout
+	c. git merge
+	d. git rebase
+
+5. Tagging
+	a. git tag
+	
+6. Undoing Changes
+	a. git reset
+	b. git revert
+	c. git stash
+
+7. Other
+	a. git submodule
+	b. git config
+							
