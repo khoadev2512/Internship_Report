@@ -144,6 +144,14 @@ GIT COMMAND
 		git merge feature-branch	# merge changes from one branch into the current branch
 
 	d. git rebase
+	
+		git rebase <base-branch>	# rebase your current branch onto a different branch
+		
+		git rebase -i main		# modify, squash, or reorder commits during the rebase process
+		
+		git rebase --autostash main	# automatically stash and restore your changes during the rebase
+
+		
 
 5. Tagging
 	a. git tag
