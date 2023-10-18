@@ -140,10 +140,9 @@ GIT COMMAND
 		git checkout -- file-name		# discard changes in the working directory for a specific file 
 		
 	c. git merge
-	
-		git merge feature-branch	# merge changes from one branch into the current branch
 		
-		khoa-test-1
+		git merge feature-branch	# merge changes from one branch into the current branch
+
 	d. git rebase
 
 5. Tagging
