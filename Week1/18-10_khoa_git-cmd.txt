@@ -50,17 +50,45 @@ GIT COMMAND
 			   
 			   
 	d. git fetch:
+		
 		git fetch 		# fetches new branches, tags, and changes from the remote repository without making any changes to your working directory
+		
 		git fetch --all		# fetch changes from all remote repositories configured in your local repository
 
 	e. git push: 
-		git push <remote> <branch>
+		
+		git push <remote> <branch> 		# push your local changes to a remote repository
+		
+		git push origin master			# push your local changes to the same branch on the remote repository
+		
+		git push origin feature-branch:main	# pushes your local "feature-branch" to the "main" branch on the remote
+		
+		git push --all origin			# push all branches to the remote repository
+		
+		git push -f origin branch-name		# force push: overwrites the remote branch with your local branch
+			
 	f. git pull:
-
+		
+		git pull					# pull changes from the default remote branch into your current local branch
+		
+		git pull origin feature-branch			# pull changes from a specific branch on a remote
+		
+		git pull --rebase origin feature-branch 	# pull and rebase changes
+		 
 3. Working with Commits
+
 	a. git commit:
+		
+		git commit -m "Your commit message here"	# create a new commit with message
+		
 	b. git status:
+		
+		git status		# display information about the current state of your repository
+		
 	c. git diff:
+	
+		
+	
 	d. git log:
 	e. git blame:
 	f. git bisect:
