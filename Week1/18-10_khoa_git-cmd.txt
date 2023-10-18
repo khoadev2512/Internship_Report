@@ -143,6 +143,7 @@ GIT COMMAND
 	
 		git merge feature-branch	# merge changes from one branch into the current branch
 		
+		khoa-test-1
 	d. git rebase
 
 5. Tagging
@@ -156,4 +157,4 @@ GIT COMMAND
 7. Other
 	a. git submodule
 	b. git config
-							
+						
