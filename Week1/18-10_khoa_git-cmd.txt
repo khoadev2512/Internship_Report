@@ -86,17 +86,63 @@ GIT COMMAND
 		git status		# display information about the current state of your repository
 		
 	c. git diff:
-	
 		
+		git diff			# see the differences between the files in your working directory and the last commit
+		
+		git diff branch_1..branch_2	# compare two branches to see the differences between them
+		
+		git diff filename		# see changes in a specific file, provide the filename as an argument
 	
 	d. git log:
+	
+		git log 		    # basic log, display a list of commits
+		
+		git log --max-count=5	    # limit the number of commits shown
+		
+		git log branch_name	    # view the commit history of a specific branch
+		
+		git log file_path	    # view the commit history of a specific file
+		
+		git log --graph		    # show a graphical representation of the commit history
+		
+		git log --author="John Doe" # filter commits by a specific
+		
+		git log -p		    # include the changes introduced by each commit
+		
 	e. git blame:
-	f. git bisect:
-
+	
+		git blame file_name	# display the commit and author information for each line of a file
+		
 4. Branch and Merging
+
 	a. git branch
+	
+		git branch			# list all branches in your Git Repository
+		
+		git branch branch_name  	# create a new branch
+		
+		git branch -m new_branch_name  	# renames the current branch to the new name
+		
+		git branch -d branch_name	# delete a branch safely
+		
+		git branch -D branch_name	# force delete a branch
+		
+		git branch -r			# list remote branches (branches on a remote repository)
+		
+		git branch -a			# view both local and remote branches
+	
 	b. git checkout
+		
+		git checkout branch_name 		# switch to a different branch
+		
+		git checkout -b new_branch_name		# Create and Switch to a New Branch
+
+		git checkout -- file-name		# discard changes in the working directory for a specific file 
+		
 	c. git merge
+	
+		git merge feature-branch	# merge changes from one branch into the current branch
+		
 	d. git rebase
 
 5. Tagging
