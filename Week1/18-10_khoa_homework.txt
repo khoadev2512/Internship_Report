@@ -1,0 +1,81 @@
+Question 1: Different between rebase and merge in git
+
+	git merge and git rebase are two different Git commands used to integrate changes from one branch into another, and they have distinct approaches to managing commit history. 
+
+	Git Merge:
+		
+		Commit History:
+
+			Preserves the commit history of the source branch. It creates a new merge commit, which combines the histories of both branches.
+			
+			Results in a more complex and non-linear commit history, with multiple merge commits.
+
+		Conflict Resolution:
+
+			Automatically creates a merge commit if there are conflicts between the source and target branches. Conflicting changes are clearly marked for resolution.
+
+			Easier to handle conflicts, as Git guides you through the resolution process.
+
+		Branch Cleanup:
+
+			Does not remove the source branch. The branch continues to exist after the merge.
+
+		Use Cases:
+
+			Typically used for integrating feature branches into a main branch.
+
+			Good for preserving the historical context of changes and branching.
+			
+	
+	Git Rebase:
+		
+		Commit History:
+
+			Rewrites the commit history of the source branch. It moves or replays the source branch's commits on top of the target branch, creating a linear sequence of commits.
+
+			Results in a cleaner and more linear commit history, with no merge commits.
+
+		Conflict Resolution:
+
+			Pauses the rebase process when conflicts occur, allowing you to resolve conflicts in each commit separately.
+	
+			Requires manual conflict resolution for each conflicting commit, which can be more work for larger conflicts.
+
+		Branch Cleanup:
+
+			Doesn't preserve the source branch. The source branch's commits are effectively "transplanted" onto the target branch.
+
+			The source branch can be deleted if it's no longer needed, as it's effectively replaced by the rebased branch.
+
+		Use Cases:
+
+			Useful for creating a clean and linear commit history, especially for feature branches or topic branches.
+			
+			Helpful when you want to integrate changes from the target branch and present them as a continuous sequence of commits without merge commits.
+			
+			
+			
+			
+			
+			
+Question2: Learn about git chery-pick
+	
+	git cherry-pick command is used to apply specific commits from one branch to another. This allows you to pick and choose individual commits and apply them to your current branch
+	
+	Syntax:
+		
+		git cherry-pick <commit-hash>						# Cherry-Pick a Single Commit
+		
+		git cherry-pick <commit-hash-1> <commit-hash-2> <commit-hash-3>		# Cherry-Pick Multiple Commits
+		
+		git cherry-pick A^..B							# Cherry-Pick a Range of Commits
+		
+		git cherry-pick --continue						# Continue to chery-pick after resolve conflicts
+		
+		git cherry-pick -e <commit-hash>					# Automatically open the commit message for editing before applying the commit
+
+
+
+		
+
+	
