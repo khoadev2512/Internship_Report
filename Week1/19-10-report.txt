@@ -110,9 +110,130 @@ some query cmd:
 			
 
 
+###############################################################################################################################
+HOMEWORK
+		
+		
+		
+		
+Question1: All type of join in Mysql:
+
+		SELECT customers.customer_id, orders.order_id
+		FROM customers
+		[Type of JOIN] orders ON customers.customer_id = orders.customer_id;
+		
+	    R:
+		A B C
+		1 2 3
+		4 5 6
+		1 2 7
+		8 4 5
+		
+	    S:
+	    	P Q
+	    	1 5
+		3 7
+
+	a. JOIN = INNER JOIN: Retrieves rows from both tables where there is a match based on the specified condition.
+	
+	SELECT * 
+	FROM R 
+	JOIN S ON R.A = S.P
+	
+		A B C P Q
+		1 2 3 1 5
+		1 2 7 1 5
+		
+		
+	b. LEFT JOIN: Retrieves all rows from the left table and the matching rows from the right table. If there's no match in the right table, NULL values are returned
+	     
+	SELECT * 
+	FROM R 
+	LEFT JOIN S ON R.A = S.P
+		
+		A B C P    Q
+		1 2 3 1    5
+		1 2 7 1    5
+		4 5 6 null null
+		8 4 5 null null
 
 
+	c. RIGHT JOIN: retrieves all rows from the right table and the matching rows from the left table. Rows with no match in the left table result in NULL values
 		
+	SELECT * 
+	FROM R 
+	RIGHT JOIN S ON R.A = S.P
+	
+		A    B    C    P Q
+		1    2    3    1 5
+		1    2    7    1 5
+		null null null 3 7
+
+ 	 
+	d. FULL JOIN: Retrieves all rows when there is a match in either the left or the right table. Rows with no match in either table result in NULL values
+	
+	SELECT * 
+	FROM R 
+	FULL JOIN S ON R.A = S.P
+	
+		A    B    C    P    Q
+		1    2    3    1    5
+		1    2    7    1    5
+		4    5    6    null null
+		8    4    5    null null
+		null null null 3    7
+
+	e. CROSS JOIN: Retrieves the Cartesian product of two tables, resulting in all possible combinations of rows from both tables.
+	
+	SELECT *
+	FROM R 
+	CROSS JOIN S
+	
+		A B C P Q
+		1 2 3 1 5
+		1 2 3 3 7
+		4 5 6 1 5
+		4 5 6 3 7
+		1 2 7 1 5
+		1 2 7 3 7 
+		8 4 5 1 5
+		8 4 5 3 7
+	
+	f. NATURAL JOIN: matches rows from two tables where the column names are the same and does not require you to specify the join condition explicitly
 		
+	    R:
+		A B C
+		1 2 3
+		4 5 6
+		1 2 7
+		8 4 5
 		
+	    S:
+	    	A D
+	    	1 5
+		3 7
+	
+	SELECT *
+	FROM R 
+	NATURAL JOIN S
 		
+		A B C D
+		1 2 3 5
+		1 2 7 5
+		
+
+		
+Question2: Sub-query
+
+	A subquery (or sub-query) in MySQL is a query that is nested within another query. Subqueries are used to retrieve data based on the results of another query and are commonly used in various SQL 			
+	operations, including SELECT, INSERT, UPDATE, DELETE, and more. Subqueries are also known as inner queries or nested queries
+	
+	SELECT A.AGENT_CODE, A.AGENT_NAME
+	FROM AGENTS A
+	WHERE A.AGENT_CODE IN (
+	    SELECT AGENT_CODE
+	    FROM CUSTOMER
+	    GROUP BY AGENT_CODE
+	    HAVING COUNT(DISTINCT WORKING_AREA) > 1
+	);
+

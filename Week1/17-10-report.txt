@@ -120,7 +120,8 @@
 
 22. tee:
 	command | tee [option] file1	# write result of the command to the file
-		      -a		# append to the given FILEs, do not overwrite
+		      -a		# 
+		       to the given FILEs, do not overwrite
 		      -i		# ignore interrupt signals
 23. find:
 	find [directory]     [OPTIONS] [expression] 	# search for files within a specific directory
@@ -158,7 +159,8 @@
 	      
 29. useradd, userdel:
 	sudo useradd [option] 		username	# create a new Linux user account
-		     -d /path/to/home			# specify a different location for the home directory for new user
+		     -d /path/to/home			# specify a different lo
+		     ion for the home directory for new user
 		     -s /bin/bash 			# specify the new user's login shell 
 		     -G [groupname]			# add new user to a group
 		     
@@ -177,7 +179,7 @@
 	   -s				# shows the specified folder’s total size
 	   -m				# provides folder and file information in MB
 	   -k				# displays information in KB
-	   -h				# informs the displayed folders and files’ last modification date
+	   -h				# informs the displayed folders and files’ last modifiion date
 
 32. top, htop: 
 	top				# displays running processes and the system’s real-time condition, including resource utilization
