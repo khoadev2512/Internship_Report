@@ -45,6 +45,9 @@ p length_finder(['Ruby','Rails','C42'])				#result: [4,5,3]
 p length_finder(['Some','Other','Array','Of','String']) 	#result: [4,4,5,2,6]
 
 
+
+
+
 # Select random elements from an array
 def random_select(array, n)
   result = []
