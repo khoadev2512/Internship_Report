@@ -1,0 +1,392 @@
+Module	Enumerable:
+	
+	all:
+		.all? [{ |obj| block } ] → true or false		# Passes each element to the given block, returns true if the block never returns false or nil
+	
+		.all?(pattern) 		 → true or false		# Check if pattern === element for every collection member
+		
+		
+			["apple", "banana", "cherry"].all? {  |word|  word.length >= 4}		#=> true
+		
+		    	["apple", "banana", "cherry"].all?(String)				#=> true
+		    
+		    	[1, 100, "cherry"].all?(Numeric)					#=> false
+		    
+		    
+	any:
+		.any? [{ |obj| block }]  → true or false		# Passes each element, returns true if the block ever returns a value other than false or nil 
+		.any?(pattern) 		 → true or false				
+		
+			["apple", "banana", "cherry"].any ? {			# true
+			  | word | word.length <= 5
+			}
+			
+    			[1, "apple", "cherry"].any?(Numeric)			# true
+		    	
+		    	
+	
+	chain:
+		.chain(*enums) → enumerator				# Returns an enumerator object generated from this enumerator and given enumerables.
+			
+			
+			[1,2].chain([3,4])							#=> [[1, 2], [3, 4]]
+			
+			
+	chunk:
+		.chunk { |elt| ... } → an_enumerator			# Enumerates over the items, chunking them together based on the return value of the block.
+
+									# Consecutive elements which return the same block value are chunked together.
+			
+		.chunk_while {|elt_before, elt_after| bool }		# Creates an enumerator for each chunked elements. The beginnings of chunks are defined by the block
+		
+		  ex1:	
+			a = ["apple", "banana", "cherry"]
+			a.chunk { | w | w.length > 5}.to_a			[false, ["apple"]], [true, ["banana", "cherry"]]
+			  					  		
+			
+		  ex2: 	
+			a = [7, 5, 9, 2, 0, 7, 9, 4, 2, 0]
+			p a.chunk_while {|i, j| i.even? == j.even? }.to_a	[[7, 5, 9], [2, 0], [7, 9], [4, 2, 0]]
+			
+			
+	collect:
+(map = )	collect { |obj| block } → new_array			# Invokes the block for each element and returns a new array containing the results
+	
+		collect → an_enumerator				# Returns an enumerator if no block is given
+
+(flat_map = )	collect_concat { |obj| block } → array			# Returns a new array with the concatenated results
+		
+		collect_concat → an_enumerator				# Returns a enumerator if no block is given
+		
+		  ex:
+			array = [1, 2, 3, 4, 5]	
+				
+			array.collect { |num| num * 2 }			# [2, 4, 6, 8, 10]
+		
+			array.collect_concat { |i| [i,i*i] }		# [[1, 1], [2, 4], [3, 9], [4, 16]] 
+			
+			
+	count:
+		count → int						# Returns the total number of elements in the enumerable.
+		
+		count(item) → int 					# Counts and returns the number of elements in the enumerable that are equal to the given item.
+		
+		count { |obj| block } → int 				# Counts and returns the number of elements in the enumerable for which the block returns true.
+
+		  ex:
+			numbers = [1, 2, 3, 2, 2, 4]
+			
+			total_count = numbers.count = 6
+			
+			count_of_twos = numbers.count(2) = 3
+			
+			count_of_evens = numbers.count { |num| num.even? } = 4
+		
+		
+	cycle:
+		cycle(n=nil) { |obj| block } → nil			# Repeats the block's execution for each element in the enumerable, up to 'n' times. Default is to repeat infinitely.
+		
+		cycle(n=nil) → an_enumerator				# Returns an enumerator when no block is given. It allows for manual iteration or chaining with other enumerable methods.
+
+		  ex:
+			[1, 2, 3].cycle(2) { |num| puts num }		# Print 1, 2, 3 twice
+			
+			
+	detect:
+(find = )	detect(ifnone = nil) { |obj| block } → obj or nil	# Find,return the first element in the enumerable for which the block returns true. If none is found, returns `ifnone` or `nil`.
+		
+		detect(ifnone = nil) → an_enumerator			# Returns an enumerator when no block is given. It allows for manual iteration or chaining with other enumerable methods.
+
+		  ex1
+		
+			numbers = [1, 3, 5, 2, 4, 6]
+		
+			result = numbers.detect { |num| num.even? } = 2
+	
+		  ex2 
+		
+			numbers = [1, 3, 5, 7, 9]
+		
+			result = numbers.detect { |num| num.even? } = nil
+				
+	drop:
+		drop(n) → array					# Removes the first 'n' elements from the enumerable and returns the remaining elements as an array.
+		
+		drop_while { |obj| block } → array			# Removes elements from the start of the enumerable satisfy the block condition and returns the remaining elements as an array.
+		
+		drop_while → an_enumerator				# Returns an enumerator for the enumerable, allowing for manual iteration or chaining with other enumerable methods.
+	
+		  ex1:
+			numbers = [1, 2, 3, 4, 5]
+		
+			result = numbers.drop(3) = [4,5]
+			
+		  ex2:
+			numbers = [1, 2, 3, 4, 5]
+			
+			result = numbers.drop_while { |num| num < 3 } 	# [3,4,5]
+
+
+	each:
+		each_cons(n) { ... } → nil				# Iterates through the enumerable in groups of 'n' elements, applying the block to each group.
+
+		each_cons(n) → an_enumerator				# Returns an enumerator to iterate through the enumerable in groups of 'n' elements, without a block.
+
+		  ex:
+			(1..6).each_cons(3) { |a| p a }			# print [1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6]
+								
+								
+		each_entry { |obj| block } → enum			# Iterates through the enumerable, yielding each element to the block, including those within sub-enumerables.
+
+		each_entry → an_enumerator				# Returns an enumerator for iterating through the enumerable, including elements within sub-enumerables, without a block.
+
+		  ex:
+			items = [1, [2, 3], 4, [5, 6], 7]
+			
+			items.each_entry do |element|
+			  puts element
+			end						# print: 1, 2, 3, 4, 5, 6, 7
+
+
+		each_slice(n) { ... } → nil				# Iterates through the enumerable, processing 'n' elements at a time using the block.
+
+		each_slice(n) → an_enumerator				# Returns an enumerator for processing 'n' elements at a time in the enumerable, without a block.
+		
+		  ex:
+			(1..10).each_slice(3) { |a| p a }		# print [1,2,3], [4,5,6], [7,8,9], [10]
+			
+			
+		each_with_index(*args) { |obj, i| block } → enum	# Iterates through the enumerable and yields each element and its index to the block. Returns an enumerator if no block is given.
+		
+		each_with_index(*args) → an_enumerator			# Returns an enumerator for iterating through the enumerable, yielding each element and its index without a block.
+
+		  ex:
+			numbers = [10, 20, 30, 40, 50]
+			numbers.each_with_index do |num, index|
+			  puts "Element #{index}: #{num}"
+			end						# Print: Element 0: 10, Element 1: 20, ....
+			
+		
+		each_with_object(obj) { |(*args), memo_obj|...} → obj 	# Iterates through the enumerable, yielding each element and a shared "memo" object to the block. The "memo" object is passed
+									  between iterations and returned.						 	
+		
+		each_with_object(obj) → an_enumerator			# Returns an enumerator for iterating through the enumerable, yielding each element and the "memo" object without a block.
+		
+		  ex: 
+			words = ["Hello", "world", "from", "Ruby"]
+				concatenated = words.each_with_object('') do |word, result|
+				  result << word << ' '
+				end
+				puts concatenated			# print: Hello world from Ruby 
+				
+				
+(to_a)	entries:
+		entries(*args) → array					# Returns an array containing the items in enum. It is allias for to_a
+	
+	
+	filter:
+		filter_map { |obj| block } → array			# Returns a new array containing the truthy results of running the block for every element in enum.
+		
+		filter_map → an_enumerator				# Returns enumerator if no block is given
+		  
+		  ex:
+		  	(1..10).filter_map { |i| i * 2 if i.even? } 	#[4, 8, 12, 16, 20]
+
+				
+	find:
+			
+(select/filter=)find_all { |obj| block } → array			# Iterates through the enumerable, returning an array of elements for which the block returns true.
+
+		find_all → an_enumerator				# Returns an enumerator for iterating through the enumerable without a block.
+
+		  ex:
+			numbers = [1, 3, 5, 2, 4, 6]
+			result = numbers.find_all { |num| num.even? } 	#[2, 4, 6]
+
+
+		find_index(value) → int or nil				# Searches the enumerable for the specified value and returns its index. If not found, returns `nil`.
+
+		find_index { |obj| block } → int or nil		# Search enumerable, returning the index of the first element for which the block returns true. If none is found, returns nil.
+
+		find_index → an_enumerator				# Returns an enumerator for iterating through the enumerable without a block.
+		  
+		  ex:
+			numbers = [10, 20, 30, 40, 50]
+			index = numbers.find_index(30) = 2
+
+
+	
+	first:
+	
+		first → obj or nil					# Returns the first element, or the first n elements, of the enumerable. 
+			   					  	# If the enumerable is empty, the first form returns nil, and the second form returns an empty array.		
+		first(n) → an_array					
+		
+		  ex:
+			a = ["a","b","c"]
+			var1 = a.first = "a"
+			var2 = a.first(2) = ["a","b"]		
+		
+		  
+	grep:
+		grep(pattern) → array					# Returns an array containing the matched elements
+		
+		grep(pattern) { |obj| block } → array				
+		
+		  ex:
+		  	words = ["apple", "banana", "cherry", "grape", "orange"]
+			result = words.grep(words = ["apple", "banana", "cherry", "grape", "orange"]
+		result = words.grep_v(/a/)/a/) 			# ["apple", "banana", "grape", "orange"]
+
+				
+(reject = )	grep_v(pattern) → array			# Searches for elements in the enumerable that do not match the specified pattern or regular expression and returns them as an array.
+
+		grep_v(pattern) { |obj| block } → array	# Searches for elements that dont match the pattern, applies the block to each non-matching element, and returns the results in an array.
+	
+		  ex:
+		  	words = ["apple", "banana", "cherry", "grape", "orange"]
+			result = words.grep_v(/a/)		# ["cherry"]
+		
+		
+	group:	
+		group_by { |obj| block } → a_hash		# Returns a hash where the keys are the evaluated result from the block and array correspond to the key
+		
+		group_by → an_enumerator
+		  ex:
+		  	(1..6).group_by { |i| i%3 }   		# {0=>[3, 6], 1=>[1, 4], 2=>[2, 5]}
+		
+
+	include:
+( member =)	include?(obj) → true or false			# check if obj in enumerable
+		  ex:
+		  	(1..10).include? 5  	# true
+			(1..10).include? 15 	# false
+			
+			
+	inject:
+		inject(initial, sym) → obj			# Combines all elements of enum by applying a binary operation, specified by a block or a symbol that names a method or operator
+		inject(sym) → obj
+		inject(initial) { |memo, obj| block } → obj
+		inject { |memo, obj| block } → obj	
+			
+		  ex:
+		  	(5..10).inject { |sum, n| sum + n }     # 45
+
+	
+	lazy:
+		lazy.other_method:			# create lazy enumerator, doesnt perform the operations until necessary, saving memory and potentially improving performance
+	
+		
+	max:
+		max → obj					# Returns the object in enum with the maximum value
+		max { |a, b| block } → obj
+		max(n) → array
+		max(n) { |a, b| block } → array		
+
+
+		max_by {|obj| block } → obj			# Returns the object in enum that gives the maximum value from the given block.	
+		max_by → an_enumerator
+		max_by(n) {|obj| block } → obj
+		max_by(n) → an_enumerator
+		
+		  ex:
+		  	a = %w(albatross dog horse)
+			a.max_by { |x| x.length }   		# "albatross"
+			
+			longest = %w{ cat sheep bear }.inject do |memo, word|
+			   memo.length > word.length ? memo : word
+			end
+	
+			
+	min:	
+		syntax like find min
+	
+		
+	minmax:
+		minmax → [min, max]			 	# return an array contains minimum and maximum value of a object 
+		minmax { |a, b| block } → [min, max]		
+		minmax_by { |obj| block } → [min, max]click to toggle source
+		minmax_by → an_enumerator
+	
+	none:
+		none? [{ |obj| block }] → true or false	# like all, but return true if none return true
+		none?(pattern) → true or false
+		
+		  ex:
+		  	["app", "bana", "chef"].none?(Numeric)	# true
+		  
+	one:
+		one? [{ |obj| block }] → true or false		# like any, but return true only exacly one return true
+		one?(pattern) → true or false
+		
+		  ex:
+		  	["apple", "banana", 1].none?(Numeric)	# true
+		
+			
+	
+	partition:
+		partition { |obj| block } → [ true_array, false_array ]	# Returns two arrays, first contain elements of enum for which the block return to true, second contain the rest.
+		partition → an_enumerator	
+		
+		  ex:
+		  	(1..6).partition { |v| v.even? }  	# [[2, 4, 6], [1, 3, 5]]
+		
+		  	
+	reduce:
+		reduce(initial, sym) → obj			# Combines all elements of enum by applying a binary operation, specified by a block or a symbol that names a method or operator
+		reduce(sym) → obj
+		reduce(initial) { |memo, obj| block } → obj
+		reduce { |memo, obj| block } → obj
+		
+		  ex:
+		  	(5..10).reduce(:+)		# 45
+	  		(5..10).reduce(1, :*)           # 151200
+	  	
+	  		
+	reject:
+	  	reject { |obj| block } → array		# opposite to find_all, return array with block return false
+		reject → an_enumerator
+		
+		  ex:
+			(1..10).reject { |i|  i % 3 == 0 }   	  	# [1, 2, 4, 5, 7, 8, 10]
+
+			[1, 2, 3, 4, 5].reject { |num| num.even? }	# [1, 3, 5]
+	
+	
+	reserve:
+	
+	
+	slice:
+	
+	
+	sort:
+	
+	
+	sum:
+	
+	
+	take:
+	
+	
+	tally:
+	
+	
+	to_h:
+	
+	
+	uniq:
+	
+	
+	zip:
+	
+	
+	
+	
+		
+		 
+	
+		
+	
+		
+	
+	

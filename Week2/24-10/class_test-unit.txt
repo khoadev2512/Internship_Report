@@ -1,0 +1,43 @@
+Class Test::Unit
+
+	assert:
+		assert(boolean, message=nil)						# Asserts that boolean is not false or nil.
+		
+		  ex:
+		  	assert [1, 2].include?(5), "message"					# display error with "message"
+	
+	
+		assert_block(message="assert_block failed.")				# assertion upon which all other assertions are based. Passes if the block yields true
+		
+		  ex:
+		  	assert_block "Couldn't do the thing" do
+			  true
+			end									# nil
+		
+		
+		assert_equal(expected, actual, message=nil)				# Passes if expected == +actual.
+		
+		  ex:
+		  	assert_equal 'MY STRING', 'my strings'.upcase, "No mathch string"	# display error with message: "No mathch string"
+		
+		
+		assert_in_delta(expected_float, actual_float, delta, message="")	# Passes if expected_float and actual_float are equal within delta tolerance.
+
+  		  ex:
+  		  	assert_in_delta 0.05002, (50000.0 / 10**6), 0.00001			# diplay error
+  		  	
+  		  
+ 		assert_instance_of(klass, object, message="")				# Passes if object .instance_of? klass
+		  ex:
+		
+		
+		assert_match(pattern, string, message="")				# Passes if string =~ pattern.
+		  ex:
+		  	assert_match(/\d+/, 'five, 6, seven')				# nil
+
+
+		
+					
+					
+		
+		
