@@ -1,0 +1,48 @@
+1. Distinguish the difference between strings and symbols, give examples:
+	
+	String: Is a string of characters surrounded by double quotes (" ") or single quotes (' '). 		For example: "Hello, World!".
+
+	Symbol: A special data type in Ruby, symbolized by a colon and an unenclosed string of characters. 	For example: :my_symbol.
+	
+	Main difference:
+		
+		a. Mutable vs. Immutable:
+			
+			Strings are mutable, which means you can change the content of a string after it's been created
+				text = "Hello"
+				text << " World"
+			
+			Symbols are immutable, which means they cannot be changed once they are created. Symbols are more like names or identifiers
+				symbol = :hello
+				#can't change
+		
+		
+		b. Memory Usage:
+			
+			Strings are more memory-intensive because they are mutable. Each modification to a string creates a new string object, potentially leading to increased memory usage.
+
+			Symbols are memory-efficient because they are immutable. Each symbol is stored only once in memory, regardless of how many times it's used in your code.
+			
+		
+		c. Use caes:
+			
+			Strings are typically used to represent textual data that can change, such as user input, messages, or any dynamic content.
+
+			Symbols are usually used as identifiers, keys in hashes, or for things that don't change during the program's execution, like method names, constants, or options in configuration settings.
+				
+
+
+
+2. String interpolation:
+
+	String interpolation is a way to embed expressions or variables within a string, and have them evaluated or substituted with their values when the string is constructed. In Ruby, you can perform string interpolation using the `#{}` syntax within a double-quoted string.
+
+	Examples:		
+		
+		name = "Khoa"
+		age = 22
+
+		message = "My name is #{name} and I am #{age} years old."
+		puts message								# output: My name is Khoa and I am 22 years old.			
+
+
