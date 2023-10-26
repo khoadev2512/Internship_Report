@@ -1,0 +1,136 @@
+Create a hash:
+
+	ary = [[4, 8], [15, 16], [23, 42]]
+	puts Hash[*ary.flatten]
+	
+
+
+Create a yaml file:
+
+	require 'yaml'
+	require 'psych'
+	
+	yaml = YAML.dump(characters)							# Use yaml
+	File.open("/home/khoanv/saved.yaml", "w") { |file| file.write(yaml) }		# write the file to the path
+			
+	yaml = File.read("/home/khoanv/saved.yaml")
+  	YAML.safe_load(yaml, permitted_classes: [Ogre, Dragon, Fairy, Symbol])		# permit_class: include class in object that u have created a yaml
+  	
+
+
+Create a Stack class with Array:
+
+	class Stack
+	  def initialize(size)
+	    @size = size
+	    @store = Array.new(@size)
+	    @top = -1
+	  end
+	  
+	  def pop
+	    if empty?
+	      nil
+	    else
+	      popped = @store[@top]
+	      @store[@top] = nil
+	      @top = @top.pred
+	      popped
+	    end
+	  end
+	  
+	  def push(element)
+	    if full? or element.nil?
+	      nil
+	    else
+	      @top = @top.succ
+	      @store[@top] = element
+	      self
+	    end
+	  end
+	  
+	  def size
+	    @size
+	  end
+	  
+	  def look
+	    @store[@top]
+	  end
+	  
+	  private
+	  
+	  def full?
+	    @top == (@size - 1)
+	  end
+	  
+	  def empty?
+	    @top == -1
+	  end
+	end
+	
+	
+
+Create a Queue class with Array:
+
+	class Queue
+	  def initialize(size)
+	    @size = size
+	    @store = Array.new(@size)
+	    @head, @tail = -1, 0
+	  end
+	  
+	  def dequeue
+	    if empty?
+	      nil
+	    else
+	      @tail = @tail.succ
+
+	      dequeued = @store[@head]
+	      @store.unshift(nil)
+	      @store.pop
+	      dequeued
+	    end
+	  end
+	  
+	  def enqueue(element)
+	    if full? or element.nil?
+	      nil
+	    else
+	      @tail = @tail.pred
+	      @store[@tail] = element
+	      self 
+	    end
+	  end
+	  
+	  def size
+	    @size
+	  end
+	  
+	  private
+	  
+	  def empty?
+	    @head == -1 and @tail == 0
+	  end
+
+	  def full?
+	    @tail.abs == (@size)
+	  end
+	end
+	
+	
+	
+Extend a module in module use:
+
+	  def self.included(base)
+	    base.extend(ClassMethods)           
+	  end
+	  
+	  
+Namespacing non-OO code using module level methods:	define a self function inside a module
+
+
+Handle Error: 
+	begin
+	     #code here
+	rescue Exception
+	     #Handle error here
+	end	  
