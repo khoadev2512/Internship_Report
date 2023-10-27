@@ -1,0 +1,13 @@
+Set: a "set" typically refers to a data structure that stores a collection of unique elements without any specific order
+	
+	require 'set'
+	my_set = Set.new
+	my_set.add("apple")
+	my_set.add("banana")
+	
+	set1 = Set.new([1, 2, 3])
+	set2 = Set.new([3, 4, 5])
+
+	union_set = set1 | set2  # Union
+	intersection_set = set1 & set2  # Intersection
+	difference_set = set1 - set2  # Difference
