@@ -1,0 +1,21 @@
+- Convert string to camel case: 	6 kyu	(done)
+	
+- Almost Even:						6 kyu	(done)
+
+- Find The Parity Outlier			6 kyu	(done)
+
+- Sum of odd numbers				6 kyu	(done)		
+
+- RGB To Hex Conversion				5 kyu	(done)		
+
+- Simple Pig Latin					5 kyu	(done)		
+
+- Moving Zeros To The End			5 kyu	(done)		
+
+- Stop gninnipS My sdroW!			6 kyu	(done)		
+
+- Sums of Parts						6 kyu	(done)		
+
+- More Zeros than Ones				6 kyu	(done)		
+
+- Multiples of 3 or 5				6 kyu	(done)
