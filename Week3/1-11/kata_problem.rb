@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Product of consecutive Fib numbers
 def productFib(prod)
   a = 0
   b = 1
@@ -7,6 +8,7 @@ def productFib(prod)
   [a, b, prod == a * b]
 end
 
+# Rot13
 def rot13(string)
   string.tr('a-zA-Z', 'n-za-mN-ZA-M')
 end

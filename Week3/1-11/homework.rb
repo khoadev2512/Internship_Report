@@ -1,17 +1,47 @@
-# method như yêu cầu như sau:
-# - Nhận vào 1 số n (số nguyên dương lớn hơn 0), và số nguyên m (chỉ chứa 1 trong 2 giá trị là 2 hoặc 3)
-# - Trả về 1 mảng string gồm n phần tử
-# - Mỗi phần tử trong mảng phải thoả điều kiện sau: là một chuỗi chứa bài toán +/- các số có tối đa 2 chữ số (kết quả của phép toán nhở hơn hoặc bằng 100), số lượng các số trong bài toán phụ thuộc vào m (m bằng 2 có nghĩa là +/- 2 số với nhau, bằng 3 là +/- 3 số với nhau)
-# - Các bài toán trả về không được trùng nhau, kết quả của bài toán là số nguyên dương không quá 100
-# Ví dụ:
-# - your_method(2, 2) => [‘4 + 5’, ‘54 - 47’]
-# - your_method(2, 3) => [‘89 - 23 + 1’, ‘74 + 2 + 11’]
+require 'test/unit/assertions'
+include Test::Unit::Assertions
 
-def generateMath(n,m)
+def generateMath(n, m)
   result = []
-  op = ['+','-','/']
-  while n > result.size
-    num = (1..100).sample(m)
+  operators = ['+', '-', '/']
+  
+  while result.size < n
+    expression = []
+    
+    m.times do
+      num = rand(1..100)
+      op = operators.sample
+      expression << "#{num} #{op}"
+    end
+    equation = expression.join(' ')
+    total = eval(equation[0..-3])
+    if total <= 100
+      result << equation[0..-3]
+    end
   end
+  result
 end
+
+# Check testcase function
+def count_numbers_and_operators(str)
+  pattern = /(\d+|\+|-|\*|\/)/
+  matches = str.scan(pattern)
+  num_count = 0
+  op_count = 0
+  matches.each do |match|
+    if match.is_a?(Array) && match[0] =~ /\d/
+      num_count += 1
+    else
+      op_count += 1
+    end
+  end
+  [num_count, op_count]
+end
+
+Test.assert_equal(generateMath(2, 3).size, 2)
+Test.assert_equal(generateMath(3, 3).size, 3)
+Test.assert_equal(generateMath(2, 2).all? { |i| eval(i) <= 100 }, true)
+Test.assert_equal(generateMath(4, 3).all? { |i| eval(i) <= 100 }, true)
+Test.assert_equal(generateMath(4, 3).all? { |i| count_numbers_and_operators(i) == [3,2]}, true )
+
 
