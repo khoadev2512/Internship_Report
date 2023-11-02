@@ -3,7 +3,7 @@ include Test::Unit::Assertions
 
 def generateMath(n, m)
   result = []
-  operators = ['+', '-', '/']
+  operators = ['+', '-',]
   
   while result.size < n
     expression = []
