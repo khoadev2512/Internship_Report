@@ -156,9 +156,11 @@
 	a. git tag
 	
 6. Undoing Changes
-	a. git reset
-	b. git revert
-	c. git stash
+	a. git reset				# undo changes in your working directory, staging area, or commit history.
+
+	b. git revert				# create a new commit that undoes the changes introduced in a previous commit.
+		
+	c. git stash				# temporarily save changes that are not ready for committing, allowing you to switch to a different branch or perform other operations
 
 7. Other
 	a. git submodule

@@ -21,30 +21,30 @@ end
 
 #2.2
 class Item
-  
+
   attr_reader :item_name, :quantity, :supplier_name, :price
-  
+
   def initialize(item_name, quantity, supplier_name, price)
     @item_name = item_name
     @quantity = quantity
     @supplier_name = supplier_name
     @price = price
-  end 
-  
+  end
+
   def ==(other)
     @item_name == other.item_name &&
     @quantity == other.quantity &&
     @supplier_name == other.supplier_name &&
     @price == other.price
   end
-  
+
   def eql?(other)
     self == other
   end
-  
+
   def hash
     @item_name.hash ^ @quantity.hash ^ @supplier_name.hash ^ @price.hash
-  end    
+  end
 end
 
 
@@ -135,7 +135,7 @@ end
 
 def median(*list)
   mid = list.length / 2
-  
+
   if list.length.odd?
     list[mid]
   else
@@ -154,7 +154,7 @@ module Foo
   end
 
   def self.included(base)
-    base.extend(ClassMethods)           
+    base.extend(ClassMethods)
   end
 end
 

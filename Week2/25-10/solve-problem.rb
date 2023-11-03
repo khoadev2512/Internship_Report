@@ -106,6 +106,10 @@ def exec_time(proc)
   execution_time = end_time - start_time
 end
 
+
+
+
+
 # Use lambda
 my_lambda = lambda do
   # Code to be measured
@@ -119,12 +123,3 @@ end
 time_taken = exec_time(my_lambda)
 
 puts "Execution time: #{time_taken} seconds"
-
-
-
-
-# Number shuffle
-def number_shuffle(number)
-  arr = number.to_s.split('')
-  arr.each_cons {}
-end

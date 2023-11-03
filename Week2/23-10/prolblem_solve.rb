@@ -2,6 +2,7 @@
 
 
 # Calculator perfrom add and substract
+
 class Calculator
   def add(a, b)
     return a + b

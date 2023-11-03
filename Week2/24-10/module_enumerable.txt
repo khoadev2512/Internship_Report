@@ -354,39 +354,123 @@ Module	Enumerable:
 	
 	
 	reserve:
-	
+		reverse_each(*args) { |item| block } → enum		# Like each but in reserve order 
+		reverse_each(*args) → an_enumerator
 	
 	slice:
-	
+		slice_after(pattern) → an_enumerator			# Creates an enumerator for each chunked elements AFTER a condition or pattern
+		slice_after { |elt| bool } → an_enumerator		
+		
+		  ex:
+		  	numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+			result = numbers.slice_after { |number| number.even? }
+
+			result.each { |subarray| p subarray }			# result = [1, 2], [3, 4] [5, 6], [7, 8], [9]
+		
+		slice_before(pattern) → an_enumerator				# Creates an enumerator for each chunked elements BEFORE a condition or pattern
+		slice_before { |elt| bool } → an_enumerator
+		
+		slice_when {|elt_before, elt_after| bool } → an_enumerator	
+		  
+		  ex:
+		  	numbers = [1, 3, 2, 5, 7, 6, 8]
+
+			result = numbers.slice_when { |prev, current| current < prev }
+
+			result.each { |subarray| p subarray }			# [1, 3], [2, 5, 7], [6, 8]
+
 	
 	sort:
-	
-	
+		sort → arrayclick to toggle source
+		
+		sort { |a, b| block } → array
+		
+		  EX:
+		  	%w(rhea kea flea).sort           #=> ["flea", "kea", "rhea"]
+		  	
+			(1..10).sort { |a, b| b <=> a }  #=> [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+			
+			
+		sort_by { |obj| block } → arrayclick to toggle source
+		
+		sort_by → an_enumerator
+		
+		  EX:
+		  	%w{apple pear fig}.sort_by { |word| word.length }              #=> ["fig", "pear", "apple"]
+		  	
+		  	
+		  	
 	sum:
-	
+		sum(init=0) → numberclick to toggle source
+		
+		sum(init=0) {|e| expr } → number
+		
+		  EX:
+		  	{ 1 => 10, 2 => 20 }.sum {|k, v| k * v }  #=> 50
+		  	
+			(1..10).sum                               #=> 55
+			
+			(1..10).sum {|v| v * 2 }                  #=> 110
+			
+			('a'..'z').sum    
 	
 	take:
-	
-	
+		  EX:
+			a = [1, 2, 3, 4, 5, 0]
+			
+			a.take(3)             #=> [1, 2, 3]
+			
+			a.take(30)            #=> [1, 2, 3, 4, 5, 0]
+			
+		take_while { |obj| block } → arrayclick to toggle source
+		
+		take_while → an_enumerator
+		
+		  EX:
+		  	a = [1, 2, 3, 4, 5, 0]
+			
+			a.take_while { |i| i < 3 }   #=> [1, 2]
+			
+			
+			
 	tally:
+		["a", "b", "c", "b"].tally  #=> {"a"=>1, "b"=>2, "c"=>1}
 	
+	
+	to_a:
+		(1..7).to_a                       #=> [1, 2, 3, 4, 5, 6, 7]
+		{ 'a'=>1, 'b'=>2, 'c'=>3 }.to_a   #=> [["a", 1], ["b", 2], ["c", 3]]
+
+		require 'prime'
+		Prime.entries 10                  #=> [2, 3, 5, 7]
+		
 	
 	to_h:
+		to_h(*args) 		→ hashclick to toggle source
+		to_h(*args) {...} 	→ hash
+		
+		  EX:
+		  	%[hello world].each_with_index.to_h         # => {:hello => 0, :world => 1}
+		  	
+		  	(1..5).to_h {|x| [x, x ** 2]}		    # => {1=>1, 2=>4, 3=>9, 4=>16, 5=>25}
 	
-	
-	uniq:
 	
 	
 	zip:
-	
-	
-	
-	
+		zip(arg, ...) → an_array_of_arrayclick to toggle source
 		
-		 
-	
+		zip(arg, ...) { |arr| block } → nil
 		
-	
-		
-	
-	
+		EX:
+			a = [ 4, 5, 6 ]
+			b = [ 7, 8, 9 ]
+
+			a.zip(b)                 #=> [[4, 7], [5, 8], [6, 9]]
+			[1, 2, 3].zip(a, b)      #=> [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+			[1, 2].zip(a, b)         #=> [[1, 4, 7], [2, 5, 8]]
+			a.zip([1, 2], [8])       #=> [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
+
+			c = []
+			a.zip(b) { |x, y| c << x + y }  #=> nil
+			c                               #=> [11, 13, 15]
