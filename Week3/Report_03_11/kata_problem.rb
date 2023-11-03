@@ -60,7 +60,7 @@ def hex_to_rgb(str)
   { r: result[0], g: result[1], b: result[2] }
 end
 
-# Human readable duration format (5kyu)
+# Human readable duration format (4kyu)
 def format_duration(seconds)
   return 'now' if seconds.zero?
 
