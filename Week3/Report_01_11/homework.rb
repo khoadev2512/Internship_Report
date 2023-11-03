@@ -10,8 +10,7 @@ def generateMath(n, m)
     expression = []
     m.times { expression << "#{rand(1..100)} #{operators.sample}" }
     equation = expression.join(' ')
-    total = eval(equation[0..-3])
-    result << equation[0..-3] if total <= 100
+    result << equation[0..-3] if eval(equation[0..-3]) <= 100
   end
   result
 end

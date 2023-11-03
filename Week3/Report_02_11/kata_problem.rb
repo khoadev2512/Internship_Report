@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 # Scamble it  (5kyu)
-def scramble(s1, s2)
+def scramble(str1, str2)
   char_count1 = Hash.new(0)
   char_count2 = Hash.new(0)
 
-  s1.chars.each { |char| char_count1[char] += 1 }
-  s2.chars.each { |char| char_count2[char] += 1 }
+  str1.chars.each { |char| char_count1[char] += 1 }
+  str2.chars.each { |char| char_count2[char] += 1 }
 
   char_count2.all? { |char, count| count <= char_count1[char] }
 end
@@ -16,15 +16,15 @@ def score(dice)
   result = 0
   triple = dice.find { |i| dice.count(i) >= 3 }
   (result += triple == 1 ? 1000 : triple * 100) unless triple.nil?
-  result + (triple == 1 ? dice.count(1) - 3 : dice.count(1)) * 100 + (triple == 1 ? dice.count(5) - 3 : dice.count(5)) * 50
+  result + (triple == 1 ? dice.count(1) - 3 : dice.count(1)) * 100 + (triple == 5 ? dice.count(5) - 3 : dice.count(5)) * 50
 end
 
 # Number of trailing zeros of N!  (5kyu)
-def zeros(n)
+def zeros(num)
   count = 0
   while n >= 5
-    n /= 5
-    count += n
+    num /= 5
+    count += num
   end
   count
 end
@@ -41,7 +41,7 @@ def ds_mult_of_pfs(min, max)
 end
 
 # Perimeter of squares in a rectangle  (5kyu)
-def perimeter(n)
+def perimeter(num)
   fibo_list = [0, 1]
   fibo = lambda do |i|
     return fibo_list[i] unless fibo_list[i].nil?
@@ -49,29 +49,29 @@ def perimeter(n)
     num = fibo.call(i - 2) + fibo.call(i - 1)
     fibo_list[i] = num
   end
-  rs = (1..n + 1).inject(0) { |sum, i| sum + fibo.call(i) }
+  rs = (1..num + 1).inject(0) { |sum, i| sum + fibo.call(i) }
   rs * 4
 end
 
 # Primes in numbers  (5kyu)
-def prime_factors(n)
+def prime_factors(num)
   require 'prime'
   result = ''
-  Prime.prime_division(n).each { |i| result += "(#{i[0]}#{i[1] == 1 ? '' : "**#{i[1]}"})" }
+  Prime.prime_division(num).each { |i| result += "(#{i[0]}#{i[1] == 1 ? '' : "**#{i[1]}"})" }
   result
 end
 
 # Integers: Recreation One  (5kyu)
-def list_squared(m, n)
+def list_squared(min, max)
   result = []
-  (m..n).to_a.each do |i|
+  (min..max).to_a.each do |i|
     sum_square = (1..i).select { |x| (i % x).zero? }.sum { |num| num**2 }
     result << [i, sum_square] if Math.sqrt(sum_square).to_i == Math.sqrt(sum_square)
   end
   result
 end
 
-# Pick peaks
+# Pick peaks  (5kyu)
 def pick_peaks(arr)
   plateaus = -1
   peaks = []
@@ -92,10 +92,10 @@ def pick_peaks(arr)
 end
 
 # Is my friend cheating?  (5kyu)
-def removNb(n)
+def remove_nb(max)
   result = []
-  arr = (1..n).to_a
-  (1..n).to_a.each do |num|
+  arr = (1..max).to_a
+  (1..max).to_a.each do |num|
     tmp = arr.reverse.find { |i| (arr.sum - num - i == num * i) && i > num }
     result << [num, tmp] unless tmp.nil?
   end
