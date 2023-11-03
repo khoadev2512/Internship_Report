@@ -3,7 +3,7 @@
 require 'test/unit'
 require_relative 'sort_staffs'
 
-# This class use to test funciton sort_staffs
+# This class use to test funciton sort_staffs 
 class TestMethod < Test::Unit::TestCase
   include Test::Unit::Assertions
   def test_length_array
