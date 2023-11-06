@@ -18,6 +18,7 @@ def get_users_by_active(conn, act)
 end
 
 def add_user(conn)
+  existing_data = get_users(conn)
   # Remove the last element if the array size exceeds the maximum
   conn.delete("/api/v1/users/#{existing_data.last['id'].to_i}") if existing_data.count == 100
   data = {
