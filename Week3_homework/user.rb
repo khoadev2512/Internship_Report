@@ -31,7 +31,7 @@ def add_user(conn, user)
 end
 
 p users = get_users(conn)
-p get_users_by_active(true)
+p get_users_by_active(conn, true)
 
 data = {
   'created_at' => Time.now.to_s,
