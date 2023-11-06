@@ -1,45 +1,60 @@
 # frozen_string_literal: true
 
-require 'faraday'
-require 'json'
+# Define class variable
+class User
+  require 'faraday'
 
-conn = Faraday.new(url: 'https://6418014ee038c43f38c45529.mockapi.io') do |faraday|
-  faraday.request  :url_encoded
-  faraday.response :logger
-  faraday.adapter  Faraday.default_adapter
+  @@conn = Faraday.new(url: 'https://6418014ee038c43f38c45529.mockapi.io') do |faraday|
+    faraday.request  :url_encoded
+    faraday.response :logger
+    faraday.adapter  Faraday.default_adapter
+  end
+  @@all_users = JSON.parse(@@conn.get('/api/v1/users').body)
 end
 
-def get_users(conn)
-  JSON.parse(conn.get('/api/v1/users').body)
-end
+# User class
+class User
+  require 'json'
 
-def get_users_by_active(conn, act)
-  JSON.parse(conn.get('/api/v1/users', { active: act }).body)
-end
+  attr_accessor :created_at, :name, :avatar, :sex, :active, :id
 
-def add_user(conn, user)
-  existing_data = get_users(conn)
-  # Remove the last element if the array size exceeds the maximum
-  conn.delete("/api/v1/users/#{existing_data.last['id'].to_i}") if existing_data.count == 100
+  def initialize(name, avatar, sex)
+    @created_at = Time.now.to_s
+    @name = name
+    @avatar = avatar
+    @sex = sex
+    @active = true
+    @id = (@@all_users.last['id'].to_i == 100 ? 100 : @@all_users.last['id'].to_i + 1)
+  end
 
-  # Send the updated JSON array in the request body
-  conn.post do |req|
-    req.url '/api/v1/users'
-    req.headers['Content-Type'] = 'application/json'
-    req.body = user
+  def self.all_users
+    @@all_users
+  end
+
+  def self.get_users_by_active(act)
+    JSON.parse(@@conn.get('/api/v1/users', { active: act }).body)
+  end
+
+  def self.add_user(user)
+    # Remove the last user if the user > 100
+    @@conn.delete("/api/v1/users/#{@@all_users.last['id'].to_i}") if @@all_users.count == 100
+
+    # Add new user
+    @@conn.post do |req|
+      req.url '/api/v1/users'
+      req.headers['Content-Type'] = 'application/json'
+      req.body = user.to_json
+    end
+  end
+
+  def to_json(*_args)
+    JSON.generate({ 'created_at' => @name, 'name' => @age, 'avatar' => @avatar, 'sex' => @sex, 'active' => @active, 'id' => @id })
   end
 end
 
-p users = get_users(conn)
-p get_users_by_active(conn, true)
+# Testing
+p User.all_users.last
+p User.get_users_by_active(true)
 
-data = {
-  'created_at' => Time.now.to_s,
-  'name' => 'Nguyen Van Khoa',
-  'avatar' => 'https://duhocvietglobal.com/wp-content/uploads/2018/12/dat-nuoc-va-con-nguoi-anh-quoc.jpg',
-  'sex' => 'male',
-  'active' => true,
-  'id' => users.last['id']
-}
-json_data = JSON.generate(data)
-p add_user(conn, json_data)
+new_user = User.new('Nguyen Van Khoa', 'https://duhocvietglobal.com/wp-content/uploads/2018/12/dat-nuoc-va-con-nguoi-anh-quoc.jpg', 'male')
+User.add_user(new_user)
