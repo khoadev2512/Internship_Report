@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# Define class variable
+# User class
 class User
+  require 'json'
   require 'faraday'
 
   @@conn = Faraday.new(url: 'https://6418014ee038c43f38c45529.mockapi.io') do |faraday|
@@ -9,12 +10,8 @@ class User
     faraday.response :logger
     faraday.adapter  Faraday.default_adapter
   end
-  @@all_users = JSON.parse(@@conn.get('/api/v1/users').body)
-end
 
-# User class
-class User
-  require 'json'
+  @@all_users = JSON.parse(@@conn.get('/api/v1/users').body)
 
   attr_accessor :created_at, :name, :avatar, :sex, :active, :id
 
@@ -48,7 +45,8 @@ class User
   end
 
   def to_json(*_args)
-    JSON.generate({ 'created_at' => @name, 'name' => @age, 'avatar' => @avatar, 'sex' => @sex, 'active' => @active, 'id' => @id })
+    JSON.generate({ 'created_at' => @name, 'name' => @age, 'avatar' => @avatar, 'sex' => @sex, 'active' => @active,
+                    'id' => @id })
   end
 end
 
@@ -56,5 +54,6 @@ end
 p User.all_users.last
 p User.get_users_by_active(true)
 
-new_user = User.new('Nguyen Van Khoa', 'https://duhocvietglobal.com/wp-content/uploads/2018/12/dat-nuoc-va-con-nguoi-anh-quoc.jpg', 'male')
+new_user = User.new('Nguyen Van Khoa',
+                    'https://duhocvietglobal.com/wp-content/uploads/2018/12/dat-nuoc-va-con-nguoi-anh-quoc.jpg', 'male')
 User.add_user(new_user)
