@@ -30,7 +30,7 @@ def add_user(conn, user)
   end
 end
 
-p get_users(conn)
+p users = get_users(conn)
 p get_users_by_active(true)
 
 data = {
@@ -39,7 +39,7 @@ data = {
   'avatar' => 'https://duhocvietglobal.com/wp-content/uploads/2018/12/dat-nuoc-va-con-nguoi-anh-quoc.jpg',
   'sex' => 'male',
   'active' => true,
-  'id' => existing_data.last['id']
+  'id' => users.last['id']
 }
 json_data = JSON.generate(data)
 p add_user(conn, json_data)
