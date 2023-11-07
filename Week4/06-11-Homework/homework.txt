@@ -25,7 +25,32 @@ Distinguish instance variable va class variable in Ruby
 		    @@count
 		  end
 		end
-		
+
+		class Car
+		  @@total_cars = 0 	# class variable
+
+		  def initialize(make, model)
+		    @make = make # instance variable
+		    @model = model 	# instance variable
+		    @@total_cars += 1
+		  end
+
+		  def self.total_cars 	# class method
+		    @@total_cars
+		  end
+
+		  def make_and_model 	# instance method
+		    "#{@make} #{@model}"
+		  end
+		end
+
+		car1 = Car.new("Toyota", "Camry")
+		car2 = Car.new("Honda", "Accord")
+
+		puts car1.make_and_model # "Toyota Camry"
+		puts car2.make_and_model # "Honda Accord"
+
+		puts Car.total_cars # 2		
 
 
 
@@ -80,14 +105,26 @@ Operator "||="
 	If the variable already has a non-nil value, the ||= operator will not reassign it.
 	
 	Ex:
-		x = nil
-		y = 25
+		# Example 1: Setting a default value
+		name = nil
+		name ||= "John Doe"
+		puts name # Output: "John Doe"
 
-		x ||= 12312  # x is currently nil, so it gets assigned the value 12312
-		y ||= 500  # y is already 5, so it remains 5
+		# Example 2: Avoiding reassignment
+		num = 5
+		num ||= 10
+		puts num # Output: 5
+
+		# Example 3: Setting a default value for a hash key
+		person = {}
+		person[:name] ||= "John Doe"
+		puts person # Output: {:name=>"John Doe"}
+
+		# Example 4: Avoiding reassignment for a hash key
+		person = { name: "Jane Doe" }
+		person[:name] ||= "John Doe"
+		puts person # Output: {:name=>"Jane Doe"}
 	
-
-
 
 
 

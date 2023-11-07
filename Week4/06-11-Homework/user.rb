@@ -47,9 +47,10 @@ class User
   end
 
   def update
+    p to_json
     response = @@connection.put do |request|
       request.headers['Content-Type'] = 'application/json'
-      request.body = data
+      request.body = to_json
       request.url @id
     end
 
@@ -57,19 +58,29 @@ class User
   end
 
   def delete
-    response = @@connection.delete do |request|
+    @@connection.delete do |request|
       request.headers['Content-Type'] = 'application/json'
       request.url @id
     end
+  end
 
-    response.success?
+  def self.delete_nil(list_users)
+    list_users.each do |i|
+      i.each { |_key, value| User.delete(i['id']) if value.nil? }
+    end
   end
 
   # Generate doc funciton (homework)
   def self.generate_table_doc(data_list)
-    my_html = '<html><head></head><body><table border="1"><tr><th>Id</th><th>Active</th><th>Sex</th><th>Avatar</th>
-    <th>Name</th><th>Created At</th></tr>'
-    sort_list = data_list.map { |i| i.reverse_each.to_h }
+    my_html = '<html><head></head><body><table border="1"><tr><th>Id</th><th>Name</th><th>Sex</th><th>Avatar</th>
+    <th>Active</th><th>Created At</th></tr>'
+    field_order = %w[id name sex avatar active created_at]
+
+    # Sort the data array by the specified fields
+    sort_list = data_list.map do |item|
+      sorted_item = field_order.map { |field| [field, item[field]] }
+      sorted_item.to_h
+    end
     sort_list.each do |item|
       my_html += '<tr>'
       item.each do |_key, value|
@@ -77,22 +88,34 @@ class User
       end
       my_html += '</tr>'
     end
-    my_html += '</table></body></html>'
+    my_html += '</table>'
+
+    # Add the image outside the table
+    my_html += '<img src="sex_percentage.png" style="width: 600px; height: 400px">'
+
+    my_html += '</body></html>'
     Htmltoword::Document.create_and_save(my_html, '/home/khoanv/Internship_Report/data_table.docx')
   end
 
   private
 
-  def data
-    {}.tap do |attributes|
-      attributes[:id] = @id unless @id.to_s.empty?
-      attributes[:name] = @name unless @name.to_s.empty?
-      attributes[:active] = @active unless @active.to_s.empty?
-      attributes[:sex] = @sex unless @sex.to_s.empty?
-      attributes[:avatar] = @avatar unless @avatar.to_s.empty?
-      attributes[:created_at] = @created_at unless @created_at.to_s.empty?
-    end.to_json
+  def to_json(*_args)
+    JSON.generate({ 'created_at' => @created_at, 'name' => @name, 'avatar' => @avatar, 'sex' => @sex,
+                    'active' => @active, 'id' => @id })
   end
 end
 
-User.generate_table_doc(User.all_users)
+# User.generate_table_doc(User.all_users)
+# User.delete_nil(User.all_users)
+
+# User.all_users
+# result = {}
+# list_users.map do |ele|
+#   result[ele['sex']] ? result[ele['sex']]  += 1 : result[ele['sex']] = 1
+# end
+# p result
+
+update_user = User.new(id: '218', name: 'Ernest Paucek Sr123', active: false,
+                       avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/928.jpg',
+                       sex: 'male', created_at: Time.now)
+update_user.update

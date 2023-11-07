@@ -1,0 +1,72 @@
+# Request with auth_token
+	conn = Faraday.new(url: 'http://httpbingo.org') do |builder|
+	  # Calls MyAuthStorage.get_auth_token on each request to get the auth token
+	  builder.request :authorization, 'Bearer', -> { MyAuthStorage.get_auth_token }
+
+	  # Sets the Content-Type header to application/json on each request.
+	  builder.request :json
+
+	  # Parses JSON response bodies.
+	  builder.response :json
+
+	  # Raises an error on 4xx and 5xx responses.
+	  builder.response :raise_error
+
+	  # Logs requests and responses.
+	  builder.response :logger
+	end
+
+
+
+# Customization
+	conn = Faraday.new('http://httpbingo.org', request: { timeout: 5 })
+	response = conn.get do |req|
+	  req.options.params_encoder = Faraday::FlatParamsEncoder
+	  req.params = { roll: ['california', 'philadelphia'] }
+	end
+	p JSON.parse(response.body)
+
+
+
+# Create a connect with option
+	options = {
+	  request: {
+	    open_timeout: 5,
+	    timeout: 5
+	  },
+	  proxy: {
+	    uri: 'https://proxy.com',
+	    user: 'proxy_user',
+	    password: 'proxy_password'
+	  },
+	  ssl: {
+	    ca_file: '/path/to/ca_file',
+	    ca_path: '/path/to/ca_path',
+	    verify: true
+	  },
+	  url: 'https://example.com',
+	  params: { foo: 'bar' },
+	  headers: { 'X-Api-Key' => 'secret', 'X-Api-Version' => '2' }
+	}
+
+	conn = Faraday.new(options) do |faraday|
+	  # ...
+	end
+
+
+
+# Middleware option:
+	- Authentication
+	- URL encoding
+	- JSON encoding/decoding
+	- Instrumentation
+	- Logging
+	- Raise Errors
+
+
+
+# PEM (.pem) file: A PEM file can contain one or more certificates and even private keys. In your case, it might contain the certificate that corresponds to the .cert file above.
+
+# Certificate (.cert or .crt) file: A certificate file usually contains a single X.509 certificate in PEM format.
+	
+
