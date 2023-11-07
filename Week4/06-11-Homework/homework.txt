@@ -1,0 +1,93 @@
+Distinguish instance variable va class variable in Ruby 
+	
+	Instance variables:
+		- Instance variables are associated with a specific instance (object) of a class.
+		- They begin with the "@" symbol, followed by the variable name (e.g., @name, @age).
+		- Each instance of a class can have its own unique set of instance variables with different values.
+		- Instance variables store data that is specific to an individual object and can have different values for each object.
+
+	Class variables:
+		- Class variables are associated with a class itself and are shared among all instances of the class.
+		- They begin with the "@@" symbol, followed by the variable name (e.g., @@count, @@total).
+		- Class variables are not tied to a specific instance and are accessible from both class methods and instance methods within the class.
+		- Class variables store data that is shared among all instances of the class.
+
+	Ex:
+		class Person
+		  @@count = 0		# This is class variable
+
+		  def initialize(name)
+		    @name = name	# This is insctance variable
+		    @@count += 1
+		  end
+
+		  def self.total_count
+		    @@count
+		  end
+		end
+		
+
+
+
+Method Visibility: private and protected
+	
+	private:
+		- Methods declared as private can only be called from within the class itself. They cannot be called from outside the class, not even by instances of the class.
+		- Subclasses of the class cannot access private methods either.
+
+	protected:
+		- Methods declared as protected can be called from within the class itself and from subclasses of the class. They cannot be called from outside the class using an instance of the class.
+		- This provides a level of visibility that is more restrictive than public but less restrictive than private.
+		
+	Ex:
+		class MyClass
+		  def public_method
+		    puts "This is a public method"
+		  end
+
+		  private
+
+		  def private_method
+		    puts "This is a private method"
+		  end	
+		
+		  protected
+
+		  def protected_method
+		    puts "This is a protected method"
+		  end
+		end
+
+		class SubClass < MyClass
+		  def access_protected
+		    protected_method 		# Accessing a protected method from a subclass is allowed
+		  end
+		end
+
+		obj = MyClass.new
+		obj.private_method   		# This will raise an error
+		obj.protected_method 		# This will raise an error
+		sub = SubClass.new
+		sub.protected_method
+
+
+
+
+Operator "||="
+
+	It is used for conditional assignment. It is often referred to as the "or equals" operator. 
+	The purpose of ||= is to assign a value to a variable if and only if that variable is currently nil (or false, which is treated similarly to nil in a boolean context). 
+	If the variable already has a non-nil value, the ||= operator will not reassign it.
+	
+	Ex:
+		x = nil
+		y = 25
+
+		x ||= 12312  # x is currently nil, so it gets assigned the value 12312
+		y ||= 500  # y is already 5, so it remains 5
+	
+
+
+
+
+
