@@ -65,6 +65,7 @@ class User
     response.success?
   end
 
+  # Generate doc funciton (homework)
   def self.generate_table_doc(data_list)
     my_html = '<html><head></head><body><table border="1"><tr><th>Id</th><th>Active</th><th>Sex</th><th>Avatar</th>
     <th>Name</th><th>Created At</th></tr>'
