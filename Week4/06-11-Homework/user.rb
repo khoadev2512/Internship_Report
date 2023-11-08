@@ -57,10 +57,10 @@ class User
     response.success?
   end
 
-  def delete
+  def self.delete(id)
     @@connection.delete do |request|
       request.headers['Content-Type'] = 'application/json'
-      request.url @id
+      request.url id
     end
   end
 
