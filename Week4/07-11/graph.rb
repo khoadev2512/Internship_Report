@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Draw chart for class User
-module Graph
+class Graph
   require 'gruff'
   require 'caracal'
   def self.draw_pie(lists, attr)

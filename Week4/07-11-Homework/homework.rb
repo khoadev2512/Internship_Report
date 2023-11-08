@@ -1,107 +1,41 @@
 # frozen_string_literal: true
 
-require 'json'
-require 'faraday'
 require 'csv'
-# User
-class User
-  API_URL = 'https://6418014ee038c43f38c45529.mockapi.io/api/v1/users'
-  @@connection = Faraday.new(url: API_URL)
-  attr_accessor :id, :name, :sex, :active, :avatar, :created_at
+require 'caracal'
+require_relative '../06-11-Homework/user'
 
-  def initialize(attributes)
-    @id = attributes[:id]
-    @name = attributes[:name]
-    @sex = attributes[:sex]
-    @active = attributes[:active]
-    @avatar = attributes[:avatar]
-    @created_at = attributes[:created_at]
-  end
-
-  def self.all_users
-    response = @@connection.get
-
-    return JSON.parse(response.body) if response.success?
-
-    []
-  end
-
-  def create
-    response = @@connection.post do |request|
-      request.headers['Content-Type'] = 'application/json'
-      request.body = data
-    end
-
-    response.success?
-  end
-
-  def update
-    p to_json
-    response = @@connection.put do |request|
-      request.headers['Content-Type'] = 'application/json'
-      request.body = to_json
-      request.url @id
-    end
-
-    response.success?
-  end
-
-  def self.delete(id)
-    @@connection.delete do |request|
-      request.headers['Content-Type'] = 'application/json'
-      request.url id.to_s
+# Import file
+class Importer
+  def import_csv(csv_file_path)
+    CSV.foreach(csv_file_path, headers: true) do |row|
+      user_data = row.to_h.transform_keys(&:to_sym)
+      new_user = User.new(user_data)
+      new_user.create
     end
   end
+end
 
-  def self.generate_csv(data_list)
-    csv_file = 'Week4/07-11-Homework/data.csv'
-
-    # Open the CSV file for writing
-    CSV.open(csv_file, 'w') do |csv|
-      # Write the header row
-      csv << %w[id name sex avatar active created_at]
-
-      # Write the data rows
-      data_list.each do |row|
-        csv << [row['id'], row['name'], row['sex'], row['avatar'], row['active'], row['created_at']]
-      end
+# Export doc
+class DocExporter
+  def export_doc(lists)
+    doc = Caracal::Document.new('UserTable.docx')
+    doc.p do
+      text 'List users'
     end
-  end
-
-  # Import csv to server
-  def self.import_csv(_data_list)
-    data = []
-
-    # Read the CSV file
-    CSV.foreach('Week4/07-11-Homework/users.csv', headers: true) do |row|
-      row.headers if data.empty?
-      data << row.to_h
+    headers = %w[Id Name Sex Active Avatar Created_at]
+    table_data = [headers] + lists.map { |item| headers.map { |header| item[header.downcase] } }
+    doc.table table_data, border_size: 3 do
+      cell_style cols[0], width: 100
+      cell_style cols[1], width: 280
+      cell_style cols[2], width: 130
+      cell_style cols[3], width: 100
+      cell_style cols[4], width: 500
+      cell_style cols[5], width: 380
     end
-
-    # Delete if the number of user is max
-    list_users = User.all_users
-    if list_users.count == 100
-      delete_users = [list_users.last['id'].to_i]
-      (1..4).each { |i| delete_users << (list_users.last['id'].to_i - i).to_s }
-      delete_users.each { |id| User.delete(id) }
-    end
-
-    # Add user
-    data.each do |user|
-      @@connection.post do |request|
-        request.headers['Content-Type'] = 'application/json'
-        request.body = user.to_json
-      end
-    end
-  end
-
-  private
-
-  def to_json(*_args)
-    JSON.generate({ 'created_at' => @created_at, 'name' => @name, 'avatar' => @avatar, 'sex' => @sex,
-                    'active' => @active, 'id' => @id })
+    doc.save
   end
 end
 
 # Testing
-User.import_csv(User.all_users)
+Importer.new.import_csv('Week4/07-11-Homework/users.csv')
+DocExporter.new.export_doc(User.active_users)
