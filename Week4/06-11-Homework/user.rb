@@ -115,7 +115,7 @@ end
 # end
 # p result
 
-update_user = User.new(id: '218', name: 'Ernest Paucek Sr123', active: false,
-                       avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/928.jpg',
-                       sex: 'male', created_at: Time.now)
-update_user.update
+# update_user = User.new(id: '218', name: 'Ernest Paucek Sr123', active: false,
+#                        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/928.jpg',
+#                        sex: 'male', created_at: Time.now)
+# update_user.update
