@@ -6,7 +6,7 @@ require_relative '../06-11-Homework/user'
 
 # Import file
 class Importer
-  def import_csv(csv_file_path)
+  def self.import_csv(csv_file_path)
     CSV.foreach(csv_file_path, headers: true) do |row|
       user_data = row.to_h.transform_keys(&:to_sym)
       new_user = User.new(user_data)
@@ -17,7 +17,7 @@ end
 
 # Export doc
 class DocExporter
-  def export_doc(lists)
+  def self.export_doc(lists)
     doc = Caracal::Document.new('UserTable.docx')
     doc.p do
       text 'List users'
@@ -37,5 +37,5 @@ class DocExporter
 end
 
 # Testing
-Importer.new.import_csv('Week4/07-11-Homework/users.csv')
-DocExporter.new.export_doc(User.active_users)
+Importer.import_csv('Week4/07-11-Homework/users.csv')
+DocExporter.export_doc(User.active_users)
