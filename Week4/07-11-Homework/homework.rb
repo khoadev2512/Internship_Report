@@ -69,22 +69,23 @@ class User
   end
 
   def self.import_csv(_data_list)
-    csv_file = 'Week4/07-11-Homework/users.csv'
     data = []
-    # Read the CSV file and populate the data array
-    CSV.foreach(csv_file, headers: true) do |row|
-      data << {
-        'name' => row['name'],
-        'avatar' => row['avatar'],
-        'sex' => row['sex']
-      }
+
+    # Read the CSV file
+    CSV.foreach('Week4/07-11-Homework/users.csv', headers: true) do |row|
+      row.headers if data.empty?
+      data << row.to_h
     end
+
+    # Delete if the number of user is max
     list_users = User.all_users
     if list_users.count == 100
       delete_users = [list_users.last['id'].to_i]
       (1..4).each { |i| delete_users << (list_users.last['id'].to_i - i).to_s }
       delete_users.each { |id| User.delete(id) }
     end
+
+    # Add user
     data.each do |user|
       @@connection.post do |request|
         request.headers['Content-Type'] = 'application/json'
@@ -101,5 +102,5 @@ class User
   end
 end
 
-# User.generate_csv(User.all_users)
+# Testing
 User.import_csv(User.all_users)
