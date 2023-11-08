@@ -54,6 +54,12 @@ class User
     end
   end
 
+  def self.delete_nil(list_users)
+    list_users.each do |i|
+      i.each { |_key, value| User.delete(i['id']) if value.nil? }
+    end
+  end
+
   def create
     # Remove the last user if the user > 100
     list_users = User.all_users
@@ -76,8 +82,9 @@ class User
   end
 end
 
-# Testing
-update_user = User.new(id: '218', name: 'Ernest Paucek Sr123', active: false,
-                       avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/928.jpg',
-                       sex: 'male', created_at: Time.now)
-update_user.update
+# update_user = User.new(id: '218', name: 'Ernest Paucek Sr123', active: false,
+#                        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/928.jpg',
+#                        sex: 'male', created_at: Time.now)
+# update_user.update
+
+User.delete_nil(User.all_users)
