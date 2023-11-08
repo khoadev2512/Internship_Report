@@ -68,6 +68,7 @@ class User
     end
   end
 
+  # Import csv to server
   def self.import_csv(_data_list)
     data = []
 
