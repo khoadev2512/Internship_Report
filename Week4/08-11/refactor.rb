@@ -18,7 +18,7 @@ end
 # Export doc
 class DocExporter
   def self.export_doc(lists)
-    doc = Caracal::Document.new('UserTable.docx')
+    doc = Caracal::Document.new('Week4/08-11/UserTable.docx')
     doc.p do
       text 'List users'
     end
@@ -37,5 +37,5 @@ class DocExporter
 end
 
 # Testing
-Importer.import_csv('Week4/07-11-Homework/users.csv')
+# Importer.import_csv('Week4/07-11-Homework/users.csv')
 DocExporter.export_doc(User.active_users)
