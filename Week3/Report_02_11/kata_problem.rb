@@ -33,9 +33,9 @@ end
 def ds_mult_of_pfs(min, max)
   require 'prime'
   (min..max).select do |number|
-    primes = number.prime_division.flat_map { |p, n| [p] * n }
+    primes = number.prime_division.flat_map { |p, num| [p] * num }
     prime_sum = primes.sum
-    divisor_sum = (1..primes.size).map { |n| primes.combination(n).uniq.map { |pa| pa.reduce(&:*) } }.flatten.sum + 1
+    divisor_sum = (1..primes.size).map { |num| primes.combination(num).uniq.map { |pa| pa.reduce(&:*) } }.flatten.sum + 1
     (divisor_sum % prime_sum).zero?
   end
 end

@@ -2,8 +2,8 @@
 
 def row_sum_odd_numbers(n)
   sum = 1
-  n.times do |i| 
+  num.times do |i|
     sum += 2*i
   end
-  sum * n + (sum-1)
+  sum * num + (sum-1)
 end

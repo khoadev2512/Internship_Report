@@ -1,7 +1,7 @@
 #7.2 Building Collections
 class FibonacciNumbers
   NUMBERS = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-    
+
   def each
     NUMBERS.each {|number| yield number }
   end
@@ -25,7 +25,7 @@ class VisualAcuity
   end
   def can_drive?
     (@subject / @normal) >= 0.5
-  end  
+  end
 end
 
 class DrivingLicenseAuthority
@@ -34,11 +34,11 @@ class DrivingLicenseAuthority
     @age = age        # Missing field
     @visual_acuity = visual_acuity
   end
-  
+
   def valid_for_license?
     @age >= 18 && visual_acuity.can_drive?
   end
-  
+
   def verdict
     if valid_for_license?
       "#{@name} can be granted driving license"
@@ -102,16 +102,16 @@ order.ship("The Restaurant, End of the Universe")
 #8.3 Benchmark
 require 'benchmark'
 
-n=4000
+num=4000
 Benchmark.bm do |benchmark|
   benchmark.report do
-    a=[]; n.times { a = a + [n] }
+    a=[]; num.times { a = a + [num] }
   end
   benchmark.report do
-    a=[]; n.times { a << n }
+    a=[]; num.times { a << num }
   end
   benchmark.report do
-    a=[1..n].map {|number| number}
+    a=[1..num].map {|number| number}
   end
 end
 
@@ -162,7 +162,7 @@ puts d.dishes_needed # should be "2 soup bowl, 1 ice cream bowl"
 
 class Object
   def superclasses
-    super_class = self.superclass 
+    super_class = self.superclass
     result = []
     while !super_class.nil?
       result << super_class
@@ -195,7 +195,7 @@ def location_in_hierarchy(object, method)
     ancestors << superclass
     klass = superclass
   end
-  ancestors.reverse.find do |ancestor| 
+  ancestors.reverse.find do |ancestor|
     ancestor.instance_methods.include?(method)
   end
 end
@@ -203,6 +203,5 @@ end
 
 # Compute sum of cubes for a given range
 def sum_of_cubes(a, b)
-  (a..b).inject(0) {|sum, n| sum + n**3}
+  (a..b).inject(0) {|sum, num| sum + num**3}
 end
-

@@ -6,7 +6,7 @@ require 'open-uri'
 # Read Information
 class RetrieveInformation
   def self.all_titles(url)
-    doc = Nokogiri::HTML(URI.open(url))
+    doc = Nokogiri::HTML(URI.parse(url).open)
     articles = doc.css('article')
     result = []
 

@@ -25,7 +25,7 @@ puts newCal.subtract 4234,8493
 def find_frequency(sentence, word)
     words = sentence.split(" ")
     return words.count(word)
-end 
+end
 
 p find_frequency("The method, given 'Ruby is The best language in the World'", "The")	#result: 2
 
@@ -39,7 +39,7 @@ def length_finder(array)
   array.each do |i|
     result << i.length
   end
-  return result 
+  return result
 end
 
 p length_finder(['Ruby','Rails','C42'])				#result: [4,5,3]
@@ -52,8 +52,8 @@ p length_finder(['Some','Other','Array','Of','String']) 	#result: [4,4,5,2,6]
 # Select random elements from an array
 def random_select(array, n)
   result = []
-  n.times do
-   result << array[rand(array.length)] 
+  num.times do
+   result << array[rand(array.length)]
   end
   result
 end

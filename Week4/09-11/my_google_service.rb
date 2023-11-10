@@ -5,7 +5,7 @@ require 'google_drive'
 require 'dotenv'
 require 'json'
 require 'google/apis/drive_v3'
-Dotenv.load('Week4/09-11/.env')
+Dotenv.load('.env')
 # Upload file from local
 class MyGoogleService
   def initialize

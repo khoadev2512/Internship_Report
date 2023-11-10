@@ -6,7 +6,7 @@ include Test::Unit::Assertions
 def generateMath(n, m)
   result = []
   operators = ['+', '-']
-  while result.size < n
+  while result.size < num
     expression = []
     m.times { expression << "#{rand(1..100)} #{operators.sample}" }
     equation = expression.join(' ')
