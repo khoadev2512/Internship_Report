@@ -7,24 +7,19 @@ require 'open-uri'
 class RetrieveInformation
   def self.all_titles(url)
     doc = Nokogiri::HTML(URI.open(url))
+    articles = doc.css('article')
     result = []
-    doc.xpath('//article//h2//a').each do |link|
+
+    articles.each do |article|
       news = {}
-      link.each do |i|
-        if i[0] == 'title'
-          news['title'] = i[1]
-          result << news
-        end
-        news['url'] = i[1] if i[0] == 'href'
-      end
-    end
-    des = []
-    doc.xpath('//article//p//a').each do |link|
-      des << link.content.gsub!("\n", '')
-    end
-    result.zip(des).map do |i|
-      i[0]['description'] = i[1]
-      i[0]
+      title_link = article.at_css('h2 a')
+      description_link = article.at_css('p a')
+
+      news['title'] = title_link['title'] if title_link
+      news['url'] = title_link['href'] if title_link
+      news['description'] = description_link.content.gsub("\n", '') if description_link
+
+      result << news unless news.empty?
     end
     result
   end
