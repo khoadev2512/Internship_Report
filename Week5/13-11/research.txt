@@ -1,0 +1,60 @@
+TÌM HIỂU VỀ ORM:
+	+ ORM (Object Relational Mapping) là một kỹ thuật lập trình cho phép ánh xạ cơ sở dữ liệu đến các đối tượng thuộc ngôn ngữ lập trình hướng đối tượng chẳng hạn như C#, Java,… (các table tương ứng các class, mối ràng buộc giữa các table tương ứng quan hệ giữa các class ‘has a’ , ‘is a’). Ta sẽ chuyển dữ liệu trong CSDL quan hệ sang đối tượng. Điều này giúp lập trình viên có thể thao tác với CSDL (database) một cách dễ hiểu, tự nhiên mà không cần phải quan tâm đến database hay kiểu dữ liệu trong database,…
+
+	+ Ưu điểm
+		- OOP: Cơ chế ORM giúp người lập trình tập trung hơn vào việc lập trình hướng đối tượng (OOP).
+		
+		- Cho phép truy cập vào code nghiệp vụ thay vì database.
+		
+		- Hạn chế những lỗi ngữ pháp trong SQL.
+		
+		- Quản lý Transaction, tạo key tự động.
+		
+		- Đơn giản và dễ sử dụng dùng không thành thạo MySQL: Cung cấp nhiều API truy vấn, hỗ trợ SQL.
+		
+		- Đem lại năng suất cao hơn: Lập trình viên code ít hơn nhưng lại dễ hiểu hơn. Điều này phù hợp với những case CRUD như Create, Read, Update, Delete.
+		
+		- Nâng cao tính độc lập: Thực hiện được với nhiều loại database (hệ quản trị cơ sở dữ liệu) và nhiều kiểu dữ liệu khác nhau. Việc thay đổi loại database trở nên dễ dàng hơn khi 
+		không bị phụ thuộc bởi các câu lệnh SQL.
+		
+		- Năng suất hơn: Viết code ít hơn, dễ hiểu hơn. Phù hợp các case CRUD (Create, Read, Update, Delete)
+		
+		- ORM Framework cho phép truy xuất nhanh hơn bằng cách cache dữ liệu.
+		
+	+ Nhược điểm
+		- Đối với những ai mới tìm hiểu về kỹ thuật ORM là gì sẽ gặp phải nhiều khó khăn trong quá trình sử dụng.
+		
+		- Khả năng truy vấn vẫn còn bị hạn chế, thỉnh thoảng lập trình viên vẫn phải dùng đến native SQL mới có thể truy vấn database.
+		
+		- Khó khăn trong việc tối ưu câu lệnh SQL (vì câu lệnh SQL được tự động sinh ra bởi ORM).
+
+		- Lập trình viên dễ gặp tình trạng bị truy xuất quá nhiều dữ liệu, bởi lẽ lúc này dữ liệu rất dễ để truy xuất. Từ đó làm ảnh hưởng đến hiệu năng hệ thống.
+		
+		- Khi sử dụng ORM Framework, lập trình viên dễ bị rơi vào bẫy truy xuất dữ liệu quá nhiều (vì quá dễ để truy xuất), ảnh hưởng đến hiệu năng của hệ thống.
+		
+	+ Theo Martin Fowler có hai patterns được áp dụng cho các cách thiết kế ORM khác nhau:
+		- Active Record: kĩ thuật này sẽ sử dụng một object wraps một hàng trong bảng cơ sở dữ liệu hoặc view, đóng gói quyền truy cập cơ sở dữ liệu, và cả logic trên dữ liệu đó. Một đối
+		 tượng bao gồm cả dữ liệu và hành vi. Dữ liệu này thường mang tính liên tục và phải lưu trữ trong database. Active Record sử dụng cách tiếp cận rõ ràng, minh bạch, đưa logic thao tác dữ liệu
+		  vào object domain. ORM nổi tiếng sử dụng Active Record: Eloquent, CachePHP, JOOQ, TOPLINK
+		  
+		- Data Mapper, theo như định nghĩa chính thức, thì đó là 1 layer mapper đưa dữ liệu qua lại giữa object và Database mà vẫn giữ được tính độc lập giữa chúng và cả giữa chính nó (lớp mapper)".
+		 Ta sẽ có 1 layer đặc biệt tách biệt với bộ nhớ của database và nhiệm vụ chính là chuyển dữ liệu qua lại giữa 2 lớp. ORM nổi tiếng sử dụng Data Mapper: Doctrine, Hibernate, SqlAlchemy
+
+
+TÌM HIỂU VỀ MVC: Model - Controller - View là nguyên tắc phân chia công việc của một ứng dụng thành ba hệ thống con riêng biệt nhưng hợp tác chặt chẽ.
+	+ Model: 
+		- Có nhiệm vụ thao tác với Database.
+		- Nó chứa tất cả các hàm, các phương thức truy vấn trực tiếp với dữ liệu.
+		- Controller sẽ thông qua các hàm, phương thức đó để lấy dữ liệu rồi gửi qua View
+	+ View: - Là giao diện người dùng (User Interface)
+		- Chứa các thành phần tương tác với người dùng như menu, button, image, text,...
+		- Nơi nhận dữ liệu từ Controller và hiển thị
+	+ Controller: 
+		- Là thành phần trung gian giữa Model và View.
+		- Đảm nhận vai trò tiếp nhận yêu cầu từ người dùng, thông qua Model để lấy dữ liệu sau đó thông qua View để hiển thị cho người dùng
+
+	+ Luồng xử lý trong MVC rất đơn giản thôi, với web nó gồm các bước như sau:
+		- Đầu tiên là Request từ người dùng được gửi từ client đến server (Xem thêm nếu bạn chưa biết về Request)
+		- Sau đó Controller dựa vào yêu cầu của người dùng tiến hành giao tiếp với Model để lấy data từ database
+		- Cuối cùng Controller gửi dữ liệu vừa lấy được về View và hiển thị ra cho người dùng trên trình duyệt
+
