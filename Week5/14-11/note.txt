@@ -1,0 +1,4 @@
+Cac lenh da su dung:
+	change_column_null :products, :name, false
+	change_column_default :products, :approved, from: true, to: false
+

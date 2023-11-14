@@ -1,5 +1,6 @@
 TÌM HIỂU VỀ ORM:
-	+ ORM (Object Relational Mapping) là một kỹ thuật lập trình cho phép ánh xạ cơ sở dữ liệu đến các đối tượng thuộc ngôn ngữ lập trình hướng đối tượng chẳng hạn như C#, Java,… (các table tương ứng các class, mối ràng buộc giữa các table tương ứng quan hệ giữa các class ‘has a’ , ‘is a’). Ta sẽ chuyển dữ liệu trong CSDL quan hệ sang đối tượng. Điều này giúp lập trình viên có thể thao tác với CSDL (database) một cách dễ hiểu, tự nhiên mà không cần phải quan tâm đến database hay kiểu dữ liệu trong database,…
+	+ ORM (Object Relational Mapping) là một kỹ thuật lập trình cho phép ánh xạ cơ sở dữ liệu đến các đối tượng thuộc ngôn ngữ lập trình hướng đối tượng chẳng hạn như C#, Java,… (các table tương ứng các class, mối ràng buộc giữa các table tương ứng quan hệ giữa các class ‘has a’ , ‘is a’).
+	  Ta sẽ chuyển dữ liệu trong CSDL quan hệ sang đối tượng. Điều này giúp lập trình viên có thể thao tác với CSDL (database) một cách dễ hiểu, tự nhiên mà không cần phải quan tâm đến database hay kiểu dữ liệu trong database,…
 
 	+ Ưu điểm
 		- OOP: Cơ chế ORM giúp người lập trình tập trung hơn vào việc lập trình hướng đối tượng (OOP).
