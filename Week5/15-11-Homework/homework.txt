@@ -1,0 +1,64 @@
+STI (Single Table Inheritance):
+	Định nghĩa: STI là một kỹ thuật cho phép một bảng cơ sở dữ liệu duy nhất được sử dụng để lưu trữ thông tin cho nhiều lớp con trong một class kế thừa. 
+		    Một cột được sử dụng để xác định loại của mỗi dòng trong bảng, dựa trên lớp con của nó.
+	
+	Ví dụ:
+		# Migration để tạo bảng vehicles (trong thư mục migration)
+		
+		class CreateVehicles < ActiveRecord::Migration[6.0]
+		  def change
+		    create_table :vehicles do |t|
+		      t.string :type
+		      t.string :brand
+		      t.string :model
+		      t.integer :wheels
+		      t.timestamps
+		    end
+		  end
+		end
+
+		# Model sử dụng STI (trong thư mục Model)
+		
+		class Vehicle < ApplicationRecord
+		end
+
+		class Car < Vehicle
+		end
+
+		class Motorcycle < Vehicle
+		end
+
+		class Bicycle < Vehicle
+		end
+
+Polymorphic
+	Định nghĩa: Polymorphic Associations là một quan hệ giữa một model và nhiều model khác thông qua một duy nhất quan hệ. 
+	Nó cho phép một model có thể kết nối với nhiều model khác dưới dạng "belongs_to" hoặc "has_many" mà không cần tạo ra nhiều cột trong cùng một bảng.
+
+	Ví dụ:	có 1 class Comment và nó có thể thuộc về class Post, hoặc Photo
+		
+		# Migration để tạo bảng comments (trong thư mục migration)
+		
+		class CreateComments < ActiveRecord::Migration[6.0]
+		  def change
+		    create_table :comments do |t|
+		      t.text :content
+		      t.references :commentable, polymorphic: true
+		      t.timestamps
+		    end
+		  end
+		end
+		
+		# Model sử dụng Polymorphic Associations (trong thư mục Model)
+		
+		class Comment < ApplicationRecord
+		  belongs_to :commentable, polymorphic: true
+		end
+
+		class Post < ApplicationRecord
+		  has_many :comments, as: :commentable
+		end
+
+		class Photo < ApplicationRecord
+		  has_many :comments, as: :commentable
+		end
