@@ -2,7 +2,9 @@
 
 class AddColumnUser < ActiveRecord::Migration[7.1]
   def change
-    add_column :users, :active, :boolean
-    add_column :users, :age,    :integer
+    change_table :users, bulk: true do |t|
+      t.boolean :active
+      t.integer :age
+    end
   end
 end

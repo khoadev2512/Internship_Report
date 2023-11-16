@@ -4,6 +4,7 @@ class ExampleMigration < ActiveRecord::Migration[7.1]
   def up
     create_table :distributors do |t|
       t.string :zipcode
+      t.timestamps
     end
 
     # create a distributors view
