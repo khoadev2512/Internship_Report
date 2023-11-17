@@ -27,10 +27,10 @@ class User < ApplicationRecord
   # validates :generation, presence: true, if: proc { |i| i.age > 18 }
 
   after_initialize do |user|
-    puts "You have initialized an user #{user.name}"
+    puts "You have initialized an user #{user.fullname}"
   end
 
   after_find do |user|
-    puts "You have found the user #{user.name}"
+    puts "You have found the user #{user.fullname}"
   end
 end
