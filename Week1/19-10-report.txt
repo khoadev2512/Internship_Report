@@ -1,0 +1,238 @@
+MYSQL and SQL COMMAND:
+
+	1. Connect server
+		
+		mysql -h [hostname] -P [portnumber] -u [username] -D [databasename] -p
+
+	2. Work with user: 
+		
+		CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';		# create a user
+
+		GRANT ALL PRIVILEGES ON your_database.* TO 'new_user'@'localhost';	# grant all privile on a scpecific db to user 
+			
+		GRANT SELECT ON your_database.tablename TO 'new_user'@'localhost';	# grant select privile on a specific table in a db to user
+		
+		FLUSH PRIVILEGES;							# ensure that the changes take effect:
+		
+		DROP USER 'new_user'@'localhost'					# delete a user
+		
+	3. Work with database, table:
+	
+		a. Use: 
+			USE your_database;					# connect to a specific database
+		
+		b. Create:
+			
+			CREATE TABLE tbl_name (				# create a table
+			    column1 datatype,				
+			    column2 datatype,					
+		    	    ...								
+		        );								   
+										
+			some datatype value:
+				- Numeric: 	INT, INTERGER, SMALLINT, BIGINT, DECIMAL, FLOAT, DOUBLE
+				- String: 	CHAR(N), VARCHAR(N), TEXT, ENUM, SET
+				- Date,Time:	DATE, TIME, DATETIME, TIMESTAMP, YEAR
+				- Binary:	BINARY, VARBINARY(N), BLOB
+				- Other:	BOOL  
+			
+			
+
+
+						
+						
+		c. Insert:						
+			INSERT INTO table_name (column1, column2, ...) 		# insert a record to table
+			VALUES (value1, value2, ...);	
+			
+		d. Query:	
+		
+			SELECT column1, column2					# basic
+			FROM table_name
+			WHERE condition;
+			
+			
+			SELECT column1 AS alias1, column2 AS alias2		# using alias
+			FROM table_name;
+
+
+			SELECT column1, column2					# Sort data with ORDER BY
+			FROM table_name
+			ORDER BY column1 ASC, column2 DESC;
+			
+			
+			SELECT column1, SUM(column2)				# Aggregating Data with GROUP BY
+			FROM table_name
+			GROUP BY column1;
+			
+			
+			SELECT column1, SUM(column2)				# Filtering Grouped Data with HAVING
+			FROM table_name
+			GROUP BY column1
+			HAVING SUM(column2) > 100;
+			
+			
+			SELECT table1.column, table2.column			# Joining Multiple Tables
+			FROM table1
+			JOIN table2 ON table1.join_column = table2.join_column;
+		
+		e. Update:
+			UPDATE table_name					# Update date with condition
+			SET column1 = value1, column2 = value2
+			WHERE condition;
+			
+		f. Delete:
+			DELETE FROM table_name WHERE condition;			# Delete data which match condition
+			
+			
+###############################################################################################################################
+
+some query cmd:
+
+	select * from `AGENTS` limit 10
+	
+	select * from `AGENTS` ORDER BY `AGENT_NAME` ACS
+	
+	select distinct * from `AGENTS` JOIN `ORDERS` ON AGENTS.`AGENT_CODE` = ORDERS.`AGENT_CODE`
+	
+	select AGENT_NAME,COUNT(*) from `AGENTS`,`CUSTOMER` where AGENTS.`AGENT_CODE`= CUSTOMER.`AGENT_CODE` group by AGENT_NAME
+	
+	update `AGENTS` set `COUNTRY`='Ho Chi Minh' where `COMMISSION` < 0.13
+	
+	select CUST_NAME, OUTSTANDING_AMT from `CUSTOMER` where `OUTSTANDING_AMT`>2000 AND (`GRADE` = 2 or `GRADE` = 3)
+
+
+	
+	
+	
+
+
+			
+
+
+###############################################################################################################################
+HOMEWORK
+		
+		
+		
+		
+Question1: All type of join in Mysql:
+
+		SELECT customers.customer_id, orders.order_id
+		FROM customers
+		[Type of JOIN] orders ON customers.customer_id = orders.customer_id;
+		
+	    R:
+		A B C
+		1 2 3
+		4 5 6
+		1 2 7
+		8 4 5
+		
+	    S:
+	    	P Q
+	    	1 5
+		3 7
+
+	a. JOIN = INNER JOIN: Retrieves rows from both tables where there is a match based on the specified condition.
+	
+	SELECT * 
+	FROM R 
+	JOIN S ON R.A = S.P
+	
+		A B C P Q
+		1 2 3 1 5
+		1 2 7 1 5
+		
+		
+	b. LEFT JOIN: Retrieves all rows from the left table and the matching rows from the right table. If there's no match in the right table, NULL values are returned
+	     
+	SELECT * 
+	FROM R 
+	LEFT JOIN S ON R.A = S.P
+		
+		A B C P    Q
+		1 2 3 1    5
+		1 2 7 1    5
+		4 5 6 null null
+		8 4 5 null null
+
+
+	c. RIGHT JOIN: retrieves all rows from the right table and the matching rows from the left table. Rows with no match in the left table result in NULL values
+		
+	SELECT * 
+	FROM R 
+	RIGHT JOIN S ON R.A = S.P
+	
+		A    B    C    P Q
+		1    2    3    1 5
+		1    2    7    1 5
+		null null null 3 7
+
+ 	 
+	d. FULL JOIN: Retrieves all rows when there is a match in either the left or the right table. Rows with no match in either table result in NULL values
+	
+	SELECT * 
+	FROM R 
+	FULL JOIN S ON R.A = S.P
+	
+		A    B    C    P    Q
+		1    2    3    1    5
+		1    2    7    1    5
+		4    5    6    null null
+		8    4    5    null null
+		null null null 3    7
+
+	e. CROSS JOIN: Retrieves the Cartesian product of two tables, resulting in all possible combinations of rows from both tables.
+	
+	SELECT *
+	FROM R 
+	CROSS JOIN S
+	
+		A B C P Q
+		1 2 3 1 5
+		1 2 3 3 7
+		4 5 6 1 5
+		4 5 6 3 7
+		1 2 7 1 5
+		1 2 7 3 7 
+		8 4 5 1 5
+		8 4 5 3 7
+	
+	f. NATURAL JOIN: matches rows from two tables where the column names are the same and does not require you to specify the join condition explicitly
+		
+	    R:
+		A B C
+		1 2 3
+		4 5 6
+		1 2 7
+		8 4 5
+		
+	    S:
+	    	A D
+	    	1 5
+		3 7
+	
+	SELECT *
+	FROM R 
+	NATURAL JOIN S
+		
+		A B C D
+		1 2 3 5
+		1 2 7 5
+		
+
+		
+Question2: Sub-query
+
+	A subquery (or sub-query) in MySQL is a query that is nested within another query. Subqueries are used to retrieve data based on the results of another query and are commonly used in various SQL 			
+	operations, including SELECT, INSERT, UPDATE, DELETE, and more. Subqueries are also known as inner queries or nested queries
+	
+	SELECT A.AGENT_CODE, A.AGENT_NAME
+	FROM AGENTS A
+	WHERE A.AGENT_CODE IN (
+	    SELECT AGENT_CODE
+	    FROM CUSTOMER
+	    GROUP BY AGENT_CODE
+	    HAVING COUNT(DISTINCT WORKING_AREA) > 1
+	);
