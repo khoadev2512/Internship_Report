@@ -1,0 +1,119 @@
+* Module ActiveRecord::Enum
+
+Basic:
+	class Review < ApplicationRecord
+	  enum :state, [:not_reviewed, :published, :hidden], default: :hidden
+	end
+	
+	# With this definition, some method will be provided
+	
+	# review.update! status: 0
+	review.hidden!	# => (set 'review' status to 'hidden' it means '2' in database)
+	review.hidden?	# => true
+	review.status	# => "hidden"
+	
+	review.status = "published"	# can't assign like this
+	review.status = 1		# this is ok
+	
+	# It can be definition like this:
+	class Conversation < ActiveRecord::Base
+	  enum :status, active: 0, archived: 1
+	end
+	
+Get value of enum:
+	Reivew.statuses[:not_reviewed]    # => 0
+	Review.statuses["published"] 	  # => 1
+
+	# Get all value with a specific value
+	Conversation.where("status <> ?", Conversation.statuses[:archived])
+
+Suffix/Presuffix:
+	class Conversation < ActiveRecord::Base
+	  enum :status, [ :active, :archived ], suffix: true
+	  enum :comments_status, [ :active, :inactive ], prefix: :comments
+	end
+	
+	# Usage
+	conversation.active_status!
+	conversation.archived_status? # => false
+
+	conversation.comments_inactive!
+	conversation.comments_active? # => false
+	
+	
+	
+* Active Record Nested Attributes
+	Allow you to save attributes on associated records through the parent.
+
+One-to-one: 
+	class Book < ActiveRecord::Base
+	  has_one :author
+	  has_many :pages
+
+	  accepts_nested_attributes_for :author, :pages
+	end
+	
+	params = { member: { name: 'Jack', avatar_attributes: { icon: 'smiling' } } }
+	member = Member.create(params[:member])
+	member.avatar.id 	# => 2
+	member.avatar.icon 	# => 'smiling'
+	
+One-to-many:
+	class Member < ActiveRecord::Base
+	  has_many :posts
+	  accepts_nested_attributes_for :posts
+	end
+	
+	params = { member: {
+	  name: 'joe', posts_attributes: [
+	    { title: 'Kari, the awesome Ruby documentation browser!' },
+	    { title: 'The egalitarian assumption of the modern citizen' },
+	    { title: '', _destroy: '1' } # this will be ignored
+	  ]
+	}}
+
+	member = Member.create(params[:member])
+	member.posts.length # => 2
+	member.posts.first.title # => 'Kari, the awesome Ruby documentation browser!'
+	member.posts.second.title # => 'The egalitarian assumption of the modern citizen'
+	
+Some other option:
+	:allow_destroy
+		If true, destroys any members from the attributes hash with a _destroy key and. 
+		Default: false
+
+	:reject_if
+		The reject_if option allows you to specify a Proc or a symbol representing a method that will be called to determine whether to reject a nested record.
+		If the Proc or method returns true, the nested record will be rejected.
+
+	:limit
+		The limit option restricts the maximum number of records that can be created through nested attributes. 
+		If you attempt to create more records than the specified limit, the additional records will be ignored.
+		
+	:update_only
+		The update_only option is used to indicate that only existing records should be updated, and new records should be ignored when dealing with nested attributes.
+		
+		
+		
+* ActiveRecord::CounterCache::ClassMethod
+	- Decrement: decrement_counter(counter_name, id, by: 1, touch: nil)		# Decrement a numeric field by one
+		counter_name - The name of the field that should be decremented.
+
+		id - The id of the object that should be decremented or an array of ids.
+
+		:by - The amount by which to decrement the value. Defaults to 1.
+
+		:touch - Touch timestamp columns when updating. Pass true to touch updated_at and/or updated_on. Pass a symbol to touch that column or an array of symbols to touch just those ones.
+	
+	- Increment: increment_counter(counter_name, id, by: 1, touch: nil)		# Increase a numerric field by one
+		Option like decrement
+		
+	- Reset:  reset_counters(id, *counters, touch: nil)				# Resets one or more counter caches to their correct value using an SQL count query.
+		Ex: Author.reset_counters(author.id, :books_count)
+
+		
+	- Update: update_counters(id, counters)			# Update_counters method is used to update the values of counter cache columns for a given record without loading the entire record into memory. 
+								  Useful when you want to increment or decrement counter cache columns without the overhead of loading and saving the full record.
+		Ex: Book.update_counters 3, year_published: 10, views: -10
+
+	
