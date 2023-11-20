@@ -1,0 +1,68 @@
+Distinguish and give examples: find, find_by, find_by!
+	+ find: 
+		The find method is used to retrieve a record by its primary key. 
+		It raises an ActiveRecord::RecordNotFound exception if the record is not found.
+		
+		Ex: user = User.find(1)
+		
+	+ find_by: 
+		The find_by method is used to retrieve the first record that matches the specified conditions. 
+		It returns nil if no record is found.
+		
+		Ex: user = User.find_by email: 'khoanv@gmail.com'
+
+	find_by!:
+		The find_by! method is similar to find_by, 
+		but it raises an ActiveRecord::RecordNotFound exception if no record is found.
+		
+		Ex: user = User.find_by!(email: 'example@example.com')
+		
+
+N+1 query problem
+	The N+1 query problem refers to a situation where a query is executed for the main records and 
+	then an additional query is executed for each associated record, resulting in N+1 queries.
+
+	Ex: 
+		users = User.all
+
+		users.each do |user|
+		  puts user.posts.count
+		end
+	
+	Solution:
+		+ eager_load: Use eager_load when you need all associated records and want to minimize the number of queries (using a LEFT OUTER JOIN).
+			Ex:
+			    books = Book.eager_load(:author).limit(10)
+
+			    books.each do |book|
+			      puts book.author.last_name
+			    end
+						
+		+ preload: Use preload when you don't need all associated records but still want to minimize the number of queries (uses separate queries).
+			Ex:
+			    books = Book.preload(:author).limit(10)
+
+			    books.each do |book|
+			      puts book.author.last_name
+			    end
+			    
+		+ includes: Use includes when you're agnostic about whether to use JOINs or separate queries and want Rails to make the decision.
+			Ex:
+			    users = User.includes(:post).limit(10)
+
+			    books.each do |book|
+			      puts user.posts.count
+			    end
+			    
+			Array of Multiple Associations: Customer.includes(:orders, :reviews)
+			Nested Associations Hash:	Customer.includes(orders: { books: [:supplier, :author] }).find(1)
+
+		+ strict_loading: 
+			Eager loading can prevent N + 1 queries but you might still be lazy loading some associations. 
+			To make sure no associations are lazy loaded you can enable strict_loading.
+			
+			Ex: 
+			    user = User.strict_loading.first
+			    user.address.city # raises an ActiveRecord::StrictLoadingViolationError
+                            user.comments.to_a # raises an ActiveRecord::StrictLoadingViolationError
+				
