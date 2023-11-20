@@ -1,0 +1,32 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Books</h1>
+
+<div id="books">
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Year Published</th>
+        <th>ISBN</th>
+        <th>Price</th>
+        <th>Out of Print</th>
+        <th>Views</th>
+        <th>Supplier</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+        <th>Show</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <%= render book %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= image_tag 'image1.jpg' %>
+</div>
+
+
+<%= link_to "New book", new_book_path %>

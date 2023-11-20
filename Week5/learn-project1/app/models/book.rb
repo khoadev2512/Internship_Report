@@ -11,7 +11,7 @@ class Book < ApplicationRecord
   # def log_product_saved_to_db
   #   Rails.logger.debug 'Product was saved to database'
   # end
-  belongs_to :author
+  belongs_to :author, counter_cache: true
   belongs_to :supplier
   has_many :reviews
   has_and_belongs_to_many :orders

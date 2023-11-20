@@ -1,9 +1,9 @@
-class ArticlesController < ApplicationController
-  before_action :set_article, only: %i[show edit update destroy]
+class BooksController < ApplicationController
+  before_action :set_book, only: %i[show edit update destroy]
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.all
+    @books = Book.all
   end
 
   # GET /articles/1 or /articles/1.json
@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/new
   def new
-    @article = Article.new
+    @book = Book.new
   end
 
   # GET /articles/1/edit
@@ -59,12 +59,12 @@ class ArticlesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id])
+    def set_book
+      @book = Book.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
-    def article_params
-      params.fetch(:article, {})
+    def book_params
+      params.fetch(:book, {})
     end
 end
