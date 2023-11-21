@@ -26,6 +26,25 @@ ACTIVE RECORD TRANSACTIONS:
 		Exceptions thrown within a transaction block will be propagated (after triggering the ROLLBACK)	
 		One exception is the ActiveRecord::Rollback exception, which will trigger a ROLLBACK when raised, but not be re-raised by the transaction block. Any other exception will be re-raised.
 		
+		# Suppose that we have a Number model with a unique column called 'i'.
+		Number.transaction do
+		  Number.create(i: 0)
+		  begin
+		    # This will raise a unique constraint error so we have to catch it
+		    Number.create(i: 0)
+		  rescue ActiveRecord::StatementInvalid
+		    # Do something to handle it 
+		  end
+
+		  # On PostgreSQL, the transaction is now unusable. The following
+		  # statement will cause a PostgreSQL error, even though the unique
+		  # constraint is no longer violated:
+		  
+		  Number.create(i: 1)
+		  # => "PG::Error: ERROR:  current transaction is aborted, commands
+		  #     ignored until end of transaction block"
+		end
+		
 	* Nested transactions
 		Transaction calls can be nested. By default, this makes all database statements in the nested transaction block become part of the parent transaction
 	
