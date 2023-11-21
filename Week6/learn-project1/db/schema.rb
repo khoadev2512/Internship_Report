@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_17_104530) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_21_105537) do
   create_table "articles", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_104530) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "books_count", limit: 45
   end
 
   create_table "books", charset: "utf8mb3", force: :cascade do |t|
@@ -49,6 +50,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_104530) do
     t.boolean "out_of_print"
     t.integer "views"
     t.integer "supplier_id"
+    t.text "tags"
   end
 
   create_table "books_orders", id: false, charset: "utf8mb3", force: :cascade do |t|
@@ -98,6 +100,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_104530) do
     t.datetime "updated_at", null: false
     t.index ["imageable_type", "imageable_id"], name: "index_pictures_on_imageable"
     t.index ["imageable_type", "imageable_id"], name: "index_pictures_on_imageable_type_and_imageable_id"
+  end
+
+  create_table "posts", charset: "utf8mb3", force: :cascade do |t|
+    t.text "tags"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "products", charset: "utf8mb3", force: :cascade do |t|
