@@ -1,0 +1,17 @@
+Distinguish between scope and class methods
+	Scope:
+		- Create a reusable query that can be used in various places within a model
+		
+		- It is typically used to encapsulate commonly used queries, making code more readable and DRY
+		
+		- Scppres are typically called on the model class itself
+		
+		- Scopes are defined using the scope method.
+		
+	Class:
+		- Used for defining operations that involve the entire class or are related to the class as a whole
+		
+		- Class methods are defined using the def self.method_name syntax.
+
+		Class methods are called on the class itself.
+

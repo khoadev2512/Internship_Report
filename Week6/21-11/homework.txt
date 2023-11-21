@@ -1,0 +1,3 @@
+Active record Serialize
+	* Usage: Serialize method in ActiveRecord is used to store complex data types (such as arrays, hashes, or other Ruby objects) in a single database column. 
+		 This is particularly useful when you need to store non-trivial data structures in a database field.
