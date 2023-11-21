@@ -1,0 +1,68 @@
+ACTIVE RECORD TRANSACTIONS:
+
+	*Definition:
+		Transactions are protective blocks where SQL statements are only permanent if they can all succeed as one atomic action
+		Transactions enforce the integrity of the database and guard the data against program errors or database break-downs. 
+	
+	* Different Active Record classes in a single transaction:
+		Though the transaction class method is called on some Active Record class, the objects within the transaction block need not all be instances of that class. 
+		This is because transactions are per-database connection, not per-model.
+		Example:
+			Account.transaction do
+			  balance.save!
+			  account.save!
+			end
+		
+		The transaction method is also available as a model instance method:
+			balance.transaction do
+			  balance.save!
+			  account.save!
+			end
+			
+	* Save and destroy:
+		Both #save and #destroy are automatically wrapped in a transaction that ensures that whatever you do in validations or callbacks will happen under its protected cover.
+		
+	* Exception handling and rolling back
+		Exceptions thrown within a transaction block will be propagated (after triggering the ROLLBACK)	
+		One exception is the ActiveRecord::Rollback exception, which will trigger a ROLLBACK when raised, but not be re-raised by the transaction block. Any other exception will be re-raised.
+		
+	* Nested transactions
+		Transaction calls can be nested. By default, this makes all database statements in the nested transaction block become part of the parent transaction
+	
+	* Callbacks
+		after_commit callbacks are called on every record saved or destroyed within a transaction immediately after the transaction is committed. 
+		after_rollback callbacks are called on every record saved or destroyed within a transaction immediately after the transaction or savepoint is rolled back.
+		
+	* Caveats
+		Do not use Data Definition Language (DDL) on MySQL
+		Because MySQL automatically releases all savepoints upon executing a DDL operation. When transaction is finished and tries to release the savepoint it created earlier, a database error will
+		occur because the savepoint has already been automatically released
+		
+	* Instance Public methods
+	
+		after_commit(*args, &block)
+			This callback is called after a record has been created, updated, or destroyed.
+			You can specify that the callback should only be fired by a certain action with the :on option:
+
+			after_commit :do_foo, on: :create
+			after_commit :do_bar, on: :update
+			after_commit :do_baz, on: :destroy
+
+			after_commit :do_foo_bar, on: [:create, :update]
+			after_commit :do_bar_baz, on: [:update, :destroy]
+
+		after_create_commit(*args, &block)
+			Shortcut for after_commit :hook, on: :create.
+
+		after_destroy_commit(*args, &block)
+			Shortcut for after_commit :hook, on: :destroy.
+
+		after_rollback(*args, &block)
+			This callback is called after a create, update, or destroy are rolled back.
+
+		after_save_commit(*args, &block)
+			Shortcut for after_commit :hook, on: [ :create, :update ].
+
+		after_update_commit(*args, &block)
+			Shortcut for after_commit :hook, on: :update.
+
