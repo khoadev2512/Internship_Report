@@ -1,3 +1,36 @@
 Active record Serialize
-	* Usage: Serialize method in ActiveRecord is used to store complex data types (such as arrays, hashes, or other Ruby objects) in a single database column. 
-		 This is particularly useful when you need to store non-trivial data structures in a database field.
+	* Usage: 
+		Serialize method in ActiveRecord is used to store complex data types (such as arrays, hashes, or other Ruby objects) in a single database column. 
+		This is particularly useful when you need to store non-trivial data structures in a database field.
+		 
+	* Example with Array:
+		class Post < ActiveRecord::Base
+		  serialize :tags, Array, coder: JSON
+		end
+		
+		post = Post.create
+		post.tags = [1,2,3,4,5,6]
+		post.save	# this array was saved as a text in database
+
+		reload!
+		post = Post.first
+		post.tags 	# => We will get the array: [1,2,3,4,5,6]
+		
+		
+	* Example with Hash:
+		class Post < ActiveRecord::Base
+		  serialize :tags, Hash, coder: JSON
+		end
+
+		post = Post.create
+		post.tags = {twitter_handle: "@BrianVanLoo", location: "CA"}
+		post.save	# this hash was saved as a text in database
+
+		reload!
+		post = Post.last
+		post.tags 	# => We will get the hash: {twitter_handle: "@BrianVanLoo", location: "CA"}
+
+		
+	
+
+		
