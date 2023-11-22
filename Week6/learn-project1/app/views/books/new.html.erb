@@ -1,8 +1,11 @@
+<% flash.each do |type, msg| %>
+  <p style="color: green"><%= msg %></p>
+<% end %>
+
 <h1>New book</h1>
 
-<%= render "form", book: @book %>
+<%= render 'form', book: @book %>
 
-<br>
 
 <div>
   <%= link_to "Back to books", books_path %>

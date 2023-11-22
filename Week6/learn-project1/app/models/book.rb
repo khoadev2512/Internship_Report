@@ -23,5 +23,5 @@ class Book < ApplicationRecord
   scope :out_of_print_and_expensive, -> { out_of_print.where('price > 500') }
   scope :costs_more_than, ->(amount) { where('price > ?', amount) }
 
-  serialize :tags
+  validates :views, numericality: { greater_than_or_equal_to: 0, only_integer: true }
 end
