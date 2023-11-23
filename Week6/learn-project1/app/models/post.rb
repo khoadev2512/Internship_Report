@@ -4,6 +4,6 @@
 #   serialize :tags, Hash, coder: JSON
 # end
 
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
   serialize :tags, coder: JSON
 end

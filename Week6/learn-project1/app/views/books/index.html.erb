@@ -6,12 +6,14 @@
   </div>
 <% end %> -->
 
-<h1>Books</h1>
-
+<h1>List of Books</h1>
+<%= link_to new_book_path, class: 'btn btn-primary', style: "position: fixed;right:0;top:0" do %>
+  + Create new book
+<% end %>
 <div id="books">
-  <table>
+  <table class="table table-striped">
     <thead>
-      <tr>
+      <tr class="table-info">
         <th>Title</th>
         <th>Author</th>
         <th>Year Published</th>
@@ -22,7 +24,7 @@
         <th>Supplier</th>
         <!-- <th>Created At</th> -->
         <!-- <th>Updated At</th> -->
-        <th>Show</th>
+        <th>Edit</th>
       </tr>
     </thead>
     <tbody>
@@ -32,8 +34,9 @@
     </tbody>
   </table>
   <%= image_tag 'image1.jpg' %>
-  <%= link_to nil, "http://example.com" %>
 </div>
 
 
-<%= link_to "New book", new_book_path %>
+
+
+

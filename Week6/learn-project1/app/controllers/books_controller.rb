@@ -27,6 +27,11 @@ class BooksController < ApplicationController
   # GET /articles/new
   def new
     @book = Book.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @comment }
+    end
   end
 
   # GET /articles/1/edit
@@ -38,11 +43,10 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     respond_to do |format|
       if @book.save
-        format.html { redirect_to article_url(@book), notice: 'Article was successfully created.' }
+        format.html { redirect_to books_url, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
         errors_message = @book.errors.full_messages.join(', ')
-
         format.html { redirect_to new_book_url, notice: errors_message }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
@@ -52,12 +56,13 @@ class BooksController < ApplicationController
   # PATCH/PUT /articles/1 or /articles/1.json
   def update
     respond_to do |format|
-      if @article.update(article_params)
-        format.html { redirect_to article_url(@article), notice: 'Article was successfully updated.' }
-        format.json { render :show, status: :ok, location: @article }
+      if @book.update(book_params)
+        format.html { redirect_to books_url, notice: 'Book was successfully updated.' }
+        format.json { render :show, status: :ok, location: @book }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
+        errors_message = @book.errors.full_messages.join(', ')
+        format.html { redirect_to edit_book_url, notice: errors_message }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,7 +72,7 @@ class BooksController < ApplicationController
     @book.destroy!
 
     respond_to do |format|
-      format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
+      format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -81,6 +86,6 @@ class BooksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def book_params
-    params.fetch(:book, {}).permit(:title, :year_published, :price, :out_of_print, :views, :supplier, :author_id, :supplier_id)
+    params.fetch(:book, {}).permit(:title, :year_published, :price, :out_of_print, :views, :author_id, :supplier_id)
   end
 end

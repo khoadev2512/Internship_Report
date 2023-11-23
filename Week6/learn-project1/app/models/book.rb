@@ -12,7 +12,7 @@ class Book < ApplicationRecord
   # def log_product_saved_to_db
   #   Rails.logger.debug 'Product was saved to database'
   # end
-  belongs_to :author, counter_cache: true
+  belongs_to :author
   belongs_to :supplier
   has_many :reviews, dependent: :restrict_with_exception
   has_and_belongs_to_many :orders
@@ -23,5 +23,5 @@ class Book < ApplicationRecord
   scope :out_of_print_and_expensive, -> { out_of_print.where('price > 500') }
   scope :costs_more_than, ->(amount) { where('price > ?', amount) }
 
-  validates :views, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+  # validates :views, numericality: { greater_than_or_equal_to: 0 }
 end

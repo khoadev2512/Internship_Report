@@ -7,5 +7,4 @@ class Order < ApplicationRecord
   # enum :status, %i[shippedd being_packed complete cancelled]
   scope :created_before, ->(time) { where(created_at: ...time) }
   scope :lmao, ->(abc) { where(subtotal: ..abc) }
-
 end

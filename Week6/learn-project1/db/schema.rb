@@ -50,7 +50,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_21_105537) do
     t.boolean "out_of_print"
     t.integer "views"
     t.integer "supplier_id"
-    t.text "tags"
   end
 
   create_table "books_orders", id: false, charset: "utf8mb3", force: :cascade do |t|

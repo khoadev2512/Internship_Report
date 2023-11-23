@@ -2,11 +2,8 @@
   <p style="color: green"><%= msg %></p>
 <% end %>
 
-<h1>New book</h1>
+<%= render 'form', book: @book, type: 'New book' %>
 
-<%= render 'form', book: @book %>
-
-
-<div>
+<div style="margin-top: 800px; margin-left: 420px">
   <%= link_to "Back to books", books_path %>
 </div>
