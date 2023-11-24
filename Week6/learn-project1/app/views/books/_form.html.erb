@@ -2,12 +2,10 @@
   <h1 style="margin-left: 170px;"><%= type%></h1>
   <div class="card-body">
     <%= form_with(model: book, class: 'needs-validation', novalidate: true) do |form| %>
-      <!-- Your existing form fields... -->
 
       <%= form.label :title, 'Title' %>
-      <div class="form-field">
-        <%= form.text_field :title, class: 'form-control', required: true %>
-        <%= display_error_message(@book, :title) %>
+      <div class="field">
+        <%= form.text_field :title %>
       </div>
 
       <%= form.label :author_id, 'Author' %>
@@ -31,7 +29,6 @@
       <div class="form-field">
         Out of print:
         <%= form.collection_radio_buttons :out_of_print, [[true, 'Yes'], [false, 'No']], :first, :last, class: 'form-check-input', required: true %>
-        <%= display_error_message(@book, :out_of_print) %>
       </div>
 
       <%= form.label :views, 'Views' %>
@@ -48,6 +45,10 @@
 
       <div class="form-actions" style="text-align:right">
         <%= form.submit 'Save', class: 'btn btn-primary' %>
+      </div>
+
+      <div class="field">
+        <%= form.rich_text_area :content %>
       </div>
     <% end %>
 </div>

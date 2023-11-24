@@ -1,30 +1,30 @@
-class AuthorsController < ApplicationController
-  before_action :set_author, only: %i[show edit update destroy]
+class SomethingsController < ApplicationController
+  # before_action :set_something, only: %i[show edit update destroy]
   # GET /articles or /articles.json
-  def index
-    @authors = Author.all
+  # def index
+  #   @authors = Author.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @authors }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html # index.html.erb
+  #     format.json { render json: @authors }
+  #   end
+  # end
 
-  # GET /authors/1 or /authors/1.json
-  def show
-    if @author.nil?
-      redirect_to books_url, notice: 'Author not found'
-    else
-      respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: @authors }
-      end
-    end
-  end
+  # # GET /authors/1 or /authors/1.json
+  # def show
+  #   if @author.nil?
+  #     redirect_to books_url, notice: 'Author not found'
+  #   else
+  #     respond_to do |format|
+  #       format.html # index.html.erb
+  #       format.json { render json: @authors }
+  #     end
+  #   end
+  # end
 
   # GET /authors/new
   def new
-    @author = Author.new
+    @something = Something.new
 
     respond_to do |format|
       format.html # new.html.erb

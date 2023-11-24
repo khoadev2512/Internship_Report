@@ -16,7 +16,8 @@ class Book < ApplicationRecord
   belongs_to :supplier
   has_many :reviews, dependent: :restrict_with_exception
   has_and_belongs_to_many :orders
-
+  has_one_attached :avatar
+  has_rich_text :content
   scope :in_print, -> { where(out_of_print: false) }
   scope :out_of_print, -> { where(out_of_print: true) }
   scope :old, -> { where(year_published: ...50.years.ago.year) }

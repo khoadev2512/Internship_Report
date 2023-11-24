@@ -1,0 +1,33 @@
+<!-- Nested Form for f -->
+<div class="nested-fields">
+    <%= f.label :title, 'Title' %>
+    <div class="form-field">
+        <%= f.text_field :title, class: 'form-control', required: true %>
+    </div>
+
+    <%= f.label :title, 'Year Published' %>
+    <div class="form-field">
+        <%= f.number_field :year_published, in: 1800..2023, step: 1, class: 'form-control', required: true %>
+    </div>
+
+    <%= f.label :price, 'Price' %>
+    <div class="form-field">
+    <%= f.number_field :price, class: 'form-control', required: true, placeholder: 'Ex: 1923'  %>
+    </div>
+
+    <%= f.label :out_of_print, 'Out of print' %>
+    <div class="form-field">
+        <%= f.check_box :out_of_print, require: true, style: 'margin-right: 10px;'%>
+    </div>
+
+    <%= f.label :views, 'Views' %>
+    <div class="form-field">
+    <%= f.number_field :views, min: 0, class: 'form-control', required: true %>
+    </div>
+
+    <%= f.label :supplier_id, 'Supplier' %>
+    <div class="form-field">
+    <%= f.collection_select :supplier_id, Supplier.all, :id, :name, { include_blank: 'Select a Supplier' }, { class: 'form-select', required: true } %>
+    </div>
+</div>
+
