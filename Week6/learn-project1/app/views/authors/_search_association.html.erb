@@ -1,0 +1,8 @@
+<div class="me-auto p-2 bd-highlight">
+    <%= search_form_for @q do |f| %>
+        <%= f.label :books_title_cont %>
+        <%= f.search_field :books_title_cont %>
+        
+        <%= f.submit "Search book title" %>
+    <% end %> 
+</div>

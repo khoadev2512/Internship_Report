@@ -16,6 +16,11 @@
         <div class="form-field">
             <%= form.text_field :title, class: 'form-control', required: true, placeholder: 'Ex: Author, Poet, Romance Novelist, ...' %>
         </div>
+
+        <%= form.label :email, 'Email' %>
+        <div class="form-field">
+            <%= form.text_field :email, class: 'form-control', required: true, placeholder: 'Ex: example@gmail.com, ...' %>
+        </div>
   
         <%= form.label :title, 'Books' %>
         <div class="books" style="margin-left: 30px;">
@@ -23,10 +28,12 @@
                 <%= render 'book_fields', f: book %>
             <% end %>
         </div>
+        <%= form.label :picture %>
+        <%= form.file_field :picture %>
         <%= link_to_add_association "Add books", form, :books, data: {association_insertion_node: '.books', association_insertion_method: :append} %>
         <div class="form-actions" style="text-align:right">
           <%= form.submit 'Save', class: 'btn btn-primary' %>
         </div>
       <% end %>
-  </div>
+      </div>
   </div>

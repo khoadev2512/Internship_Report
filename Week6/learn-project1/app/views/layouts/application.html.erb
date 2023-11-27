@@ -5,20 +5,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_importmap_tags %>
-    <%= stylesheet_link_tag 'form' %>
-    <%= stylesheet_link_tag 'actiontext' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css' %>
+    <%= javascript_include_tag 'jquery' %>
+    <%= javascript_include_tag 'trix' %>
   </head>
 
   <body>
     <%= yield %>
-    <%= javascript_include_tag 'trix' %>
-    <%= javascript_include_tag "jquery" %>
-    <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js', 'integrity': 'sha384-MCw98/SFnGE8fJT3u82joYGK2UqDfNEX5jEJNFOw5eVoqu/4+5GJsVcN9ZtbcMKd', 'crossorigin': 'anonymous' %>
-    <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js', 'integrity': 'sha384-r9p0N5Lx6ZYt9i9Vw3Iz7QfY1S7S/ZCJDBxqYFZ5RQQRSJoGzAAnUdKhIaWzr9UI', 'crossorigin': 'anonymous' %>
   </body>
 </html>

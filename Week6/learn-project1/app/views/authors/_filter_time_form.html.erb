@@ -1,0 +1,11 @@
+<div class="p-2 bd-highlight">
+    <%= search_form_for @q do |f| %>
+        <p>Created in:</p>
+        <%= f.label :created_at_gt, 'Srart day' %>
+        <%= f.date_field :created_at_gt, style:"margin-right:50px;" %>
+
+        <%= f.label :created_at_lt, 'End day' %>
+        <%= f.date_field  :created_at_lt %>
+        <%= f.submit "Search" %>
+    <% end %> 
+</div>

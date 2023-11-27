@@ -7,8 +7,10 @@ pin '@hotwired/turbo-rails', to: 'turbo.min.js', preload: true
 pin '@hotwired/stimulus', to: 'stimulus.min.js', preload: true
 pin '@hotwired/stimulus-loading', to: 'stimulus-loading.js', preload: true
 pin_all_from 'app/javascript/controllers', under: 'controllers'
-pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@5.3.2/dist/js/bootstrap.esm.js"
-pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.8/lib/index.js"
-pin "@nathanvda/cocoon", to: "https://ga.jspm.io/npm:@nathanvda/cocoon@1.2.14/cocoon.js"
-pin "trix"
-pin "@rails/actiontext"
+pin 'bootstrap', to: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js', preload: true
+pin 'popper.js', to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js', preload: true
+pin 'jquery', to: 'https://code.jquery.com/jquery-3.6.0.min.js', preload: true
+pin 'cocoon', to: 'cocoon.js', preload: true
+pin 'trix', preload: true
+pin '@rails/actiontext', to: 'actiontext.js'
+# pin "rails-ujs", to: "rails-ujs.js"

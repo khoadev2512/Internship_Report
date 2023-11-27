@@ -1,5 +1,9 @@
 <tr id="<%= dom_id author %>">
+    <td><%= author.id %></td></td>
     <td><%= author.first_name  %></td>
     <td><%= author.last_name %></td>
     <td><%= author.title %></td>
+    <td><%= author.created_at %></td>
+    <td><%= author.books.pluck(:title)%></td>
+    <td><%= image_tag(author.picture, width: 200) if author.picture.attached? %> </td>
 </tr>

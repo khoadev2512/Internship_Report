@@ -25,4 +25,7 @@ class Book < ApplicationRecord
   scope :costs_more_than, ->(amount) { where('price > ?', amount) }
 
   # validates :views, numericality: { greater_than_or_equal_to: 0 }
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[title created_at updated_at]
+  end
 end

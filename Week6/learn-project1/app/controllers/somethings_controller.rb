@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SomethingsController < ApplicationController
   # before_action :set_something, only: %i[show edit update destroy]
   # GET /articles or /articles.json
@@ -85,6 +87,7 @@ class SomethingsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def author_params
-    params.require(:author).permit(:first_name, :last_name, :title, :views, books_attributes: [:title, :year_published, :price, :out_of_print, :views, :supplier_id])
+    params.require(:author).permit(:first_name, :last_name, :title, :views,
+                                   books_attributes: %i[title year_published price out_of_print views supplier_id])
   end
 end

@@ -1,8 +1,21 @@
+# frozen_string_literal: true
+
 class AuthorsController < ApplicationController
+  include Pagy::Backend
+  require_relative 'service/google_drive_service'
   before_action :set_author, only: %i[show edit update destroy]
   # GET /articles or /articles.json
   def index
-    @authors = Author.all
+    @q = Author.ransack(search_params)
+    @q.sorts = 'title acs' if !@q.sorts.empty?
+
+    @authors = @q.result(distinct: true)
+    # Rails.logger.debug '============================'
+    # Rails.logger.debug "============#{@authorr.inspect}============="
+    # Rails.logger.debug '============================'
+    # @authors = Author.all
+
+    @pagy, @authors = pagy(@authors, items: 5)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,8 +53,10 @@ class AuthorsController < ApplicationController
     # book_params.inspect
     @author = Author.new(author_params)
     @author.books_count = 1
+    GoogleDriveService.new.inspect
     respond_to do |format|
       if @author.save
+        AuthorMailer.with(author: @author).welcome_email.deliver_now
         format.html { redirect_to authors_url, notice: 'Author was successfully created.' }
         format.json { render :show, status: :created, location: @author }
       else
@@ -85,6 +100,11 @@ class AuthorsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def author_params
-    params.require(:author).permit(:first_name, :last_name, :title, :views, books_attributes: [:title, :year_published, :price, :out_of_print, :views, :supplier_id])
+    params.require(:author).permit(:first_name, :last_name, :title, :picture, :email, books_attributes:
+    %i[title year_published price out_of_print views supplier_id])
+  end
+
+  def search_params
+    params.fetch(:query, {}).permit(:first_name_or_title_cont, :s, :created_at_lt, :created_at_gt, :books_title_cont)
   end
 end
