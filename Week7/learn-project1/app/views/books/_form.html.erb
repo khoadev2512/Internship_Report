@@ -1,0 +1,55 @@
+<div class="card border-info mb-3" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px">
+  <h1 style="margin-left: 170px;"><%= type%></h1>
+  <div class="card-body">
+    <%= form_with(model: book, class: 'needs-validation', novalidate: true) do |form| %>
+
+      <%= form.label :title, 'Title' %>
+      <div class="field">
+        <%= form.text_field :title %>
+      </div>
+
+      <%= form.label :author_id, 'Author' %>
+      <div class="form-field">
+        <%= form.collection_select :author_id, Author.all, :id, ->(author) { "#{author.first_name} #{author.last_name}" }, { include_blank: 'Select an Author' }, { class: 'form-select', required: true } %>
+        <%= display_error_message(@book, :author_id) %>
+      </div>
+
+      <%= form.label :year_published, 'Year published' %>
+      <div class="form-field">
+        <%= form.number_field :year_published, in: 1500..2023, step: 1, class: 'form-control', required: true %>
+        <%= display_error_message(@book, :year_published) %>
+      </div>
+
+      <%= form.label :price, 'Price' %>
+      <div class="form-field">
+        <%= form.number_field :price, class: 'form-control', required: true %>
+        <%= display_error_message(@book, :price) %>
+      </div>
+
+      <div class="form-field">
+        Out of print:
+        <%= form.collection_radio_buttons :out_of_print, [[true, 'Yes'], [false, 'No']], :first, :last, class: 'form-check-input', required: true %>
+      </div>
+
+      <%= form.label :views, 'Views' %>
+      <div class="form-field">
+        <%= form.number_field :views, min: 0, class: 'form-control', required: true %>
+        <%= display_error_message(@book, :views) %>
+      </div>
+
+      <%= form.label :supplier_id, 'Supplier' %>
+      <div class="form-field">
+        <%= form.collection_select :supplier_id, Supplier.all, :id, :name, { include_blank: 'Select a Supplier' }, { class: 'form-select', required: true } %>
+        <%= display_error_message(@book, :supplier_id) %>
+      </div>
+
+      <div class="form-actions" style="text-align:right">
+        <%= form.submit 'Save', class: 'btn btn-primary' %>
+      </div>
+
+      <div class="field">
+        <%= form.rich_text_area :content %>
+      </div>
+    <% end %>
+</div>
+</div>

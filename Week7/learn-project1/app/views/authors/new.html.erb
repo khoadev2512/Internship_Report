@@ -1,0 +1,9 @@
+<% flash.each do |type, msg| %>
+  <p style="color: green"><%= msg %></p>
+<% end %>
+
+<%= render 'form', author: @author, type: 'New author' %>
+
+<div style="margin-top: 800px; margin-left: 900px">
+  <%= link_to "Back to authors", authors_path %>
+</div>

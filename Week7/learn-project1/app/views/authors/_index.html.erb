@@ -1,0 +1,35 @@
+<p style="color: green"><%= notice %></p>
+<h1><%= link_to "List of authors", authors_path %></h1>
+<%= link_to new_author_path, class: 'btn btn-primary', style: "position: fixed;right:0;top:0" do %>
+  + Create new author
+<% end %>
+
+<div class="d-flex bd-highlight mb-3">
+  <%= render 'authors/search_form'%>
+  <%= render 'authors/filter_time_form'%>
+  <%= render 'authors/search_association' %>
+</div>
+
+<div id="books">
+  <table class="table table-striped">
+    <thead>
+      <tr class="table-info">
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th><%= sort_link(@q, :title) %></th>
+        <th>Created at</th>
+        <th>Books</th>
+        <th>Avatar</th>
+        <th>Edit</th>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @authors.each do |author| %>
+        <%= render author %>
+      <% end %>
+    </tbody>
+  </table>
+  <%== pagy_bootstrap_nav(@pagy) %>
+</div>

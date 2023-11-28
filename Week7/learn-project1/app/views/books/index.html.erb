@@ -1,0 +1,42 @@
+<p style="color: green"><%= notice %></p>
+
+<!-- <% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
+<% end %> -->
+
+<h1>List of Books</h1>
+<%= link_to new_book_path, class: 'btn btn-primary', style: "position: fixed;right:0;top:0" do %>
+  + Create new book
+<% end %>
+<div id="books">
+  <table class="table table-striped">
+    <thead>
+      <tr class="table-info">
+        <th>Title</th>
+        <th>Author</th>
+        <th>Year Published</th>
+        <!-- <th>ISBN</th> -->
+        <th>Price</th>
+        <th>Out of Print</th>
+        <th>Views</th>
+        <th>Supplier</th>
+        <!-- <th>Created At</th> -->
+        <!-- <th>Updated At</th> -->
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <%= render book %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= image_tag 'image1.jpg' %>
+</div>
+
+
+
+
+

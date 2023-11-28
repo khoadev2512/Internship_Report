@@ -1,0 +1,15 @@
+<tr id="<%= dom_id book %>">
+  <td><%= book.title %></td>
+          <td><%= book.author.first_name + ' ' + book.author.last_name %></td>
+          <td><%= book.year_published %></td>
+          <!-- <td><%= book.isbn %></td> -->
+          <td><%= number_to_currency(book.price) %></td>
+          <td><%= book.out_of_print ? 'Yes' : 'No' %></td>
+          <td><%= book.views %></td>
+          <td><%= book.supplier.name %></td>
+          <!-- <td><%= book.created_at %></td>
+          <td><%= book.updated_at %></td> -->
+          <td><%= link_to "Edit", edit_book_path(book.id) %></td>
+          <td><%= book.content %></td>
+  </td>
+</tr>
