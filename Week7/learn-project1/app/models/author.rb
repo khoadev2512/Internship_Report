@@ -8,10 +8,17 @@ class Author < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :title, presence: true
+  validates :email, presence: true
 
   has_rich_text :content
 
   has_one_attached :picture
+
+  after_save :announce
+
+  def announce
+    Rails.logger.debug 'You have just created a user'
+  end
 
   def self.ransackable_associations(_auth_object = nil)
     ['books']  # Allow searching through the 'books' association

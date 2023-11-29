@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../service/google_drive_service'
+# require_relative '../../service/google_drive_service'
 
 class AuthorsController < ApplicationController
   include Pagy::Backend
@@ -8,7 +8,7 @@ class AuthorsController < ApplicationController
   # GET /articles or /articles.json
   def index
     @q = Author.ransack(search_params)
-    @q.sorts = 'title acs' if !@q.sorts.empty?
+    @q.sorts = 'title acs' unless @q.sorts.empty?
 
     @authors = @q.result(distinct: true)
     # Rails.logger.debug '============================'
@@ -17,21 +17,23 @@ class AuthorsController < ApplicationController
     # @authors = Author.all
 
     @pagy, @authors = pagy(@authors, items: 5)
-
+    # puts '--------------------'
+    # puts @authors.inspect
+    # puts '--------------------'
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @authors }
     end
-    @env = ENV["API_KEY"]
+    @env = ENV['API_KEY']
   end
 
   # GET /authors/1 or /authors/1.json
   def show
     if @author.nil?
-      redirect_to books_url, notice: 'Author not found'
+      redirect_to authors_url, notice: 'Author not found'
     else
       respond_to do |format|
-        format.html # index.html.erb
+        format.html # show.html.erb
         format.json { render json: @authors }
       end
     end

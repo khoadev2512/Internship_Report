@@ -76,7 +76,7 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   host = 'http://localhost:3000/'
-  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.default_url_options = { host: }
 
   config.action_mailer.delivery_method = :letter_opener_web
 
