@@ -8,6 +8,6 @@
         <strong>Price:</strong> <%= book.price %><br>
         <strong>Supplier ID:</strong> <%= book.supplier_id %><br>
       </p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <%= link_to "Edit book", edit_book_path(book), class: 'btn btn-primary', role: 'button'%>
     </div>
 </div>

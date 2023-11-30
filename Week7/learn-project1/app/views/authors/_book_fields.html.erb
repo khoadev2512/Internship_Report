@@ -1,32 +1,38 @@
-<div class="nested-fields">
-    <%= f.label :title, 'Title' %>
-    <div class="form-field">
-        <%= f.text_field :title, class: 'form-control', required: true %>
+<div class="card" style="margin-bottom: 20px;">
+    <div class="card-header" style="background-color: rgb(209, 207, 207);">
+        Book <%= count %>
     </div>
+    <div class="card-body">
+        <div class="nested-fields">
+            <div>
+                <%= f.label :title, 'Title', class:'form-label' %>
+                <%= f.text_field :title, class: 'form-control', required: true %>
+            </div>
 
-    <%= f.label :title, 'Year Published' %>
-    <div class="form-field">
-        <%= f.number_field :year_published, in: 1800..2023, step: 1, class: 'form-control', required: true %>
-    </div>
+            <div class="form-field">
+                <%= f.label :title, 'Year Published', class:'form-label' %>
+                <%= f.number_field :year_published, in: 1800..2023, step: 1, class: 'form-control', required: true %>
+            </div>
 
-    <%= f.label :price, 'Price' %>
-    <div class="form-field">
-    <%= f.number_field :price, class: 'form-control', required: true, placeholder: 'Ex: 1923'  %>
-    </div>
+            <div class="form-field">
+                <%= f.label :price, 'Price', class:'form-label' %>
+                <%= f.number_field :price, class: 'form-control', required: true, placeholder: 'Ex: 1923'  %>
+            </div>
 
-    <%= f.label :out_of_print, 'Out of print' %>
-    <div class="form-field">
-        <%= f.check_box :out_of_print, require: true, style: 'margin-right: 10px;'%>
-    </div>
+            <div class="form-field">
+                <%= f.label :out_of_print, 'Out of print', class:'form-label' %>
+                <%= f.check_box :out_of_print, require: true, style: 'margin-right: 10px;'%>
+            </div>
 
-    <%= f.label :views, 'Views' %>
-    <div class="form-field">
-    <%= f.number_field :views, min: 0, class: 'form-control', required: true %>
-    </div>
+            <div class="form-field">
+                <%= f.label :views, 'Views', class:'form-label' %>
+                <%= f.number_field :views, min: 0, class: 'form-control', required: true %>
+            </div>
 
-    <%= f.label :supplier_id, 'Supplier' %>
-    <div class="form-field">
-    <%= f.collection_select :supplier_id, Supplier.all, :id, :name, { include_blank: 'Select a Supplier' }, { class: 'form-select', required: true } %>
+            <div class="form-field">
+                <%= f.label :supplier_id, 'Supplier', class:'form-label' %>
+                <%= f.collection_select :supplier_id, Supplier.all, :id, :name, { include_blank: 'Select a Supplier' }, { class: 'form-select', required: true } %>
+            </div>
+        </div>
     </div>
 </div>
-

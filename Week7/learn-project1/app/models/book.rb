@@ -6,7 +6,7 @@ class Book < ApplicationRecord
 
   belongs_to :author
   belongs_to :supplier
-  has_many :reviews, dependent: :restrict_with_exception
+  has_many :reviews, dependent: :destroy
   has_and_belongs_to_many :orders
 
   has_one_attached :avatar
@@ -23,7 +23,7 @@ class Book < ApplicationRecord
 
   # validates :views, numericality: { greater_than_or_equal_to: 0 }
   def self.ransackable_attributes(_auth_object = nil)
-    %w[title created_at updated_at]
+    %w[title]
   end
 
   private

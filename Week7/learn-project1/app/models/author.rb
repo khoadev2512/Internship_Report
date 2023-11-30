@@ -2,7 +2,7 @@
 
 # class
 class Author < ApplicationRecord
-  has_many :books, -> { order(year_published: :desc) }, dependent: :restrict_with_exception
+  has_many :books, -> { order(year_published: :desc) }, dependent: :destroy, inverse_of: :author
   accepts_nested_attributes_for :books
 
   validates :first_name, presence: true

@@ -1,10 +1,13 @@
-.form-field {
-    margin-bottom: 10px;
-    color: red;
-}
-
 .form-field input[type="radio"] {
   margin-right: 10px; /* Adjust the value as needed */
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-field {
+  margin-top: 40px;
 }
 
 .attachment__progress {

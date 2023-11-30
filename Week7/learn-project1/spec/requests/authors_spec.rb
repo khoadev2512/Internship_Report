@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe AuthorsController, type: :controller do
-  describe 'GET /authors' do
-    let!(:authors) { FactoryBot.create_list(:author, 50) }
+  describe 'GET #index' do
+    let(:authors) { FactoryBot.create_list(:author, 50) }
+
     it 'View the list of authors' do
       get :index
       expect(response).to render_template(:index)
@@ -17,24 +18,24 @@ RSpec.describe AuthorsController, type: :controller do
   end
 
   describe 'GET /authors/_id' do
-    context "when author is not found" do
-      it "redirects to authors_url" do
+    context 'when author is not found' do
+      it 'redirects to authors_url' do
         get :show, params: { id: 51 }
 
         expect(response).to redirect_to(authors_url)
       end
 
-      it "sets a flash notice" do
+      it 'sets a flash notice' do
         get :show, params: { id: 23 }
 
         expect(flash[:notice]).to eq('Author not found')
       end
     end
 
-    context "when author is found" do
+    context 'when author is found' do
       let(:author) { FactoryBot.create(:author) }
 
-      it "renders the show template" do
+      it 'renders the show template' do
         get :show, params: { id: author.id }
 
         expect(response).to render_template(:show)
@@ -42,7 +43,7 @@ RSpec.describe AuthorsController, type: :controller do
     end
   end
 
-  describe 'GET /authors/new' do
+  describe 'GET #new' do
     it 'Render new page' do
       get :new
       expect(response).to render_template(:new)
@@ -56,9 +57,9 @@ RSpec.describe AuthorsController, type: :controller do
 
     context 'with valid parameters' do
       it 'creates a new author' do
-        expect {
+        expect do
           post :create, params: valid_params
-        }.to change(Author, :count).by(1)
+        end.to change(Author, :count).by(1)
       end
 
       it 'redirects to authors_url' do
@@ -72,9 +73,9 @@ RSpec.describe AuthorsController, type: :controller do
       end
 
       it 'sends a welcome email' do
-        expect {
+        expect do
           post :create, params: valid_params
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
 
       it 'calls the announce method after save' do
@@ -82,20 +83,22 @@ RSpec.describe AuthorsController, type: :controller do
         post :create, params: valid_params
       end
 
-      it 'creates an author with correct attributes' do
+      it 'and check if the created equal to the one save to db' do
         post :create, params: valid_params
         created_author = Author.last
 
-        # You can also compare the entire attributes hash
-        expect(created_author.attributes).to include(valid_params[:author])
+        expect(created_author.first_name).to eq(valid_params[:author][:first_name])
+        expect(created_author.last_name).to eq(valid_params[:author][:last_name])
+        expect(created_author.title).to eq(valid_params[:author][:title])
+        expect(created_author.email).to eq(valid_params[:author][:email])
       end
     end
 
     context 'with invalid parameters' do
       it 'does not create a new author' do
-        expect {
+        expect do
           post :create, params: invalid_params
-        }.not_to change(Author, :count)
+        end.not_to change(Author, :count)
       end
 
       it 'redirects to new_author_url' do
@@ -109,16 +112,68 @@ RSpec.describe AuthorsController, type: :controller do
       end
 
       it 'does not send a welcome email' do
-        expect {
+        expect do
           post :create, params: invalid_params
-        }.not_to change { ActionMailer::Base.deliveries.count }
+        end.not_to(change { ActionMailer::Base.deliveries.count })
       end
 
       it 'does not call the announce method after save' do
         expect_any_instance_of(Author).not_to receive(:announce)
         post :create, params: invalid_params
       end
+    end
+  end
 
+  describe 'PATCH #update' do
+    let(:author) { FactoryBot.create(:author) }
+    let(:valid_attributes) { { first_name: 'John' } }
+    let(:invalid_attributes) { { first_name: nil } }
+
+    context 'with valid params' do
+      it 'updates the author' do
+        patch :update, params: { id: author.to_param, author: valid_attributes }
+        author.reload
+        expect(author.first_name).to eq('John')
+      end
+
+      it 'redirects to authors index' do
+        patch :update, params: { id: author.to_param, author: valid_attributes }
+        expect(response).to redirect_to(authors_url)
+      end
+    end
+
+    context 'with invalid params' do
+      it 'does not update the author' do
+        patch :update, params: { id: author.to_param, author: invalid_attributes }
+        author.reload
+        expect(author.first_name).not_to be_nil
+      end
+
+      it 'redirects to edit_book_url with an error message' do
+        patch :update, params: { id: author.to_param, author: invalid_attributes }
+        expect(response).to redirect_to(edit_book_url)
+        expect(flash[:notice]).to include("First name can't be blank")
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:author) { FactoryBot.create(:author) }
+
+    it 'destroys the author' do
+      expect do
+        delete :destroy, params: { id: author.to_param }
+      end.to change(Author, :count).by(-1)
+    end
+
+    it 'redirects to authors index' do
+      delete :destroy, params: { id: author.to_param }
+      expect(response).to redirect_to(authors_url)
+    end
+
+    it 'sets a flash notice' do
+      delete :destroy, params: { id: author.to_param }
+      expect(flash[:notice]).to eq('Article was successfully destroyed.')
     end
   end
 end

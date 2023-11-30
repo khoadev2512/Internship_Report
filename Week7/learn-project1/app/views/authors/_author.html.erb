@@ -1,36 +1,38 @@
-<tr id="<%= dom_id author %>">
+<tr id="<%=  author.id %>">
     <td style="width: 50px;"><%= author.id %></td>
     <td style="width: 100px;"><%= author.first_name %></td>
     <td style="width: 100px;"><%= author.last_name %></td>
     <td style="width: 100px;"><%= author.title %></td>
     <td style="width: 150px;"><%= author.email %></td>
     <td style="width: 150px;"><%= author.created_at %></td>
-    <!-- <td style="width: 150px;"><%= author.books.pluck(:id) %></td> -->
+    <td style="width: 75px;">
+      <%= link_to "View", author, class: "btn btn-success", role: "button" %>
+    </td>
     <td style="width: 75px;">
         <%= link_to "Edit", edit_author_path(author.id), class: "btn btn-primary", role: "button" %>
     </td>
     <td style="width: 75px;">
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-            Delete
-        </button>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= author.id %>">
+        Delete
+      </button>
     </td>
 </tr>
 
 
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete author</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            Are you sure to delete this author and all books associating ?
-        </div>
-        <div class="modal-footer">
-          <%= button_to "Delete", author_path(author), method: :delete, class: "btn btn-danger" %>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
+<div class="modal fade" id="deleteModal<%= author.id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete author</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure to delete this author and all books associating <%= author.id %>?
+      </div>
+      <div class="modal-footer">
+        <%= button_to "Delete", author_path(author), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
 </div>

@@ -1,5 +1,4 @@
 <p style="color: green"><%= notice %></p>
-<h1><%= link_to "List of authors", authors_path %></h1>
 <%= link_to new_author_path, class: 'btn btn-primary', style: "position: fixed;right:0;top:0" do %>
   + Create new author
 <% end %>
@@ -27,7 +26,7 @@
     </thead>
     <tbody>
       <% @authors.each do |author| %>
-        <%= render author %>
+        <%= render "author" %>
       <% end %>
     </tbody>
   </table>

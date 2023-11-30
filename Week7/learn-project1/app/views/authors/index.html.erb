@@ -1,13 +1,12 @@
 <p style="color: green"><%= notice %></p>
-<h1><%= link_to "List of authors", authors_path %></h1>
 <%= link_to new_author_path, class: 'btn btn-primary', style: "position: fixed;right:0;top:0" do %>
   + Create new author
 <% end %>
 
 <div class="d-flex bd-highlight mb-3">
   <%= render 'search_form'%>
+  <%= render 'search_association' %>
   <%= render 'filter_time_form'%>
-  <!-- <%= render 'search_association' %> -->
 </div>
 
 <div id="authors">
@@ -20,6 +19,7 @@
         <th style="width: 100px;"><%= sort_link(@q, :title) %></th>
         <th style="width: 200px;">Email</th>
         <th style="width: 150px;">Created at</th>
+        <th style="width: 75px;">View</th>
         <th style="width: 75px;">Edit</th>
         <th style="width: 75px;">Delete</th>
       </tr>
