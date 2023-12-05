@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
+require_relative '../../service/google_drive_service'
+
 class AuthorsController < ApplicationController
   include Pagy::Backend
-  require_relative 'service/google_drive_service'
   before_action :set_author, only: %i[show edit update destroy]
   # GET /articles or /articles.json
   def index
@@ -21,6 +22,8 @@ class AuthorsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @authors }
     end
+
+    GoogleDriveService.new.upload_file_drive(url_for(Author.find(19).picture), 'author_19.png')
   end
 
   # GET /authors/1 or /authors/1.json
@@ -53,7 +56,7 @@ class AuthorsController < ApplicationController
     # book_params.inspect
     @author = Author.new(author_params)
     @author.books_count = 1
-    GoogleDriveService.new.inspect
+
     respond_to do |format|
       if @author.save
         AuthorMailer.with(author: @author).welcome_email.deliver_now

@@ -1,0 +1,58 @@
+Position trong CSS: Các giá trị position trong CSS (relative, absolute, và fixed) được sử dụng để xác định cách phần tử HTML sẽ được định vị trong môi trường xem
+	- relative: 
+		Khi một phần tử được đặt với position: relative;, nó sẽ được di chuyển từ vị trí ban đầu của nó, tương đối với chính nó. 
+		Các thuộc tính top, right, bottom, và left được sử dụng để điều chỉnh vị trí của nó.
+		
+		Ex:
+		  .relative-container {
+		    position: relative;
+		    width: 200px;
+		    height: 200px;
+		    background-color: lightblue;
+		  }
+
+		  .relative-item {
+		    position: relative;
+		    top: 20px;		// di chuyển xuống dưới 20px từ vị trí ban đầu
+		    left: 30px;		// di chuyển sang phải 30px
+		    width: 50px;
+		    height: 50px;
+		    background-color: orange;
+		  }
+		  
+	- absolute:
+		Khi một phần tử được đặt với position: absolute; , nó sẽ được định vị tương đối với phần tử cha gần nhất mà có position không phải là static (mặc định).
+		
+		Ex:
+		  Có 2 box:
+		  	<body>
+			   <div class="container">
+			       <div class="box-orange"></div>
+			       <div class="box-blue"></div>
+			   </div>
+			</body>
+			
+			.box-orange {
+			  position: absolute;
+			  background: orange;
+			  width: 100px;
+			  height: 100px;
+			  left: 5px;	// di chuyển xuống phải 5px so với box xanh
+			  top: 5px;	// di chuyển xuống dưới 5px so với box xanh
+			}
+	- fixed:
+		Khi một phần tử được đặt với position: fixed;, nó sẽ được đặt cố định trong môi trường xem, và sẽ không bị ảnh hưởng bởi việc cuộn trang.
+		
+		Ex:
+		<style>
+		  .fixed-item {
+		    position: fixed;
+		    top: 20px;
+		    left: 30px;
+		    width: 50px;
+		    height: 50px;
+		    background-color: orange;
+		  }
+		</style>
+
+		<div class="fixed-item"></div>		# Phần tử trên sẽ ở vị trí cố định và không bị ảnh hưởng bởi cuộn trang

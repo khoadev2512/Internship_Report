@@ -1,3 +1,9 @@
+require 'googleauth'
+require 'google_drive'
+require 'dotenv'
+require 'json'
+require 'ggoogle/apis/drive_v3'
+
 class GoogleDriveService
   def initialize
     @credentials = Google::Auth::UserRefreshCredentials.new(

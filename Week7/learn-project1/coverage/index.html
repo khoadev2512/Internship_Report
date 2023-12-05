@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2023-11-30T11:13:34+07:00">2023-11-30T11:13:34+07:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2023-12-01T14:11:57+07:00">2023-12-01T14:11:57+07:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -30,7 +30,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         3.76
+         3.33
        </span>
     </span> hits/line
     )
@@ -132,7 +132,7 @@
             <td class="cell--number">16</td>
             <td class="cell--number">16</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">11.44</td>
+            <td class="cell--number">8.31</td>
             
           </tr>
         
@@ -1482,7 +1482,7 @@
 
             
 
-            <code class="ruby">    params.require(:author).permit(:first_name, :last_name, :title, :picture, :email, books_attributes:</code>
+            <code class="ruby">    params.require(:author).permit(:id, :first_name, :last_name, :title, :picture, :email, books_attributes:</code>
           </li>
         </div>
       
@@ -1980,7 +1980,7 @@
 
             
 
-            <code class="ruby">  has_many :books, -&gt; { order(year_published: :desc) }, dependent: :restrict_with_exception</code>
+            <code class="ruby">  has_many :books, -&gt; { order(year_published: :desc) }, dependent: :destroy, inverse_of: :author</code>
           </li>
         </div>
       
@@ -2139,8 +2139,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="165" data-linenumber="20">
-            <span class="hits">165</span>
+          <li class="covered" data-hits="115" data-linenumber="20">
+            <span class="hits">115</span>
             
 
             
@@ -2385,7 +2385,7 @@
 
             
 
-            <code class="ruby">  has_many :reviews, dependent: :restrict_with_exception</code>
+            <code class="ruby">  has_many :reviews, dependent: :destroy</code>
           </li>
         </div>
       

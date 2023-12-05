@@ -6,4 +6,5 @@
     <td><%= author.created_at %></td>
     <td><%= author.books.pluck(:title)%></td>
     <td><%= image_tag(author.picture, width: 200) if author.picture.attached? %> </td>
+    <td><%= url_for(author.picture) if author.picture.attached?%></td>
 </tr>

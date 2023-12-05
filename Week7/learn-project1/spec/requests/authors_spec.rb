@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe AuthorsController, type: :controller do
   describe 'GET #index' do
-    let(:authors) { FactoryBot.create_list(:author, 50) }
+    let!(:authors) { FactoryBot.create_list(:author, 50) }
 
     it 'View the list of authors' do
       get :index
@@ -12,7 +12,8 @@ RSpec.describe AuthorsController, type: :controller do
     end
 
     it 'JSON return 5 authors' do
-      get :index, as: :json
+      get :index, as: :json, params: { page: 1 }
+      # expect(response.content_type).to eq('application/json; charset=utf-8')
       expect(JSON.parse(response.body).count).to eq(5)
     end
   end
@@ -146,6 +147,7 @@ RSpec.describe AuthorsController, type: :controller do
       it 'does not update the author' do
         patch :update, params: { id: author.to_param, author: invalid_attributes }
         author.reload
+        author.inspect
         expect(author.first_name).not_to be_nil
       end
 
